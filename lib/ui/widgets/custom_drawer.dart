@@ -111,12 +111,20 @@ class CustomDrawer extends StatelessWidget {
         return [
           _buildListTile(context, Icons.bar_chart, 'Revenue', () {}),
           _buildListTile(context, Icons.people, 'Staff Hours', () {}),
+          _buildListTile(context, Icons.local_bar, 'Drinks', () {
+             Navigator.pop(context); // Close drawer
+             Navigator.push(context, MaterialPageRoute(builder: (context) => const DrinksScreen()));
+          }),
           // Manager might also want to see inventory? Added for completeness based on general logic, but sticking to prompt "Revenue and Staff Hours" focus.
         ];
       case UserRole.employee:
         return [
           _buildListTile(context, Icons.inventory, 'Inventory (View Only)', () {}),
           _buildListTile(context, Icons.schedule, 'Personal Hours', () {}),
+          _buildListTile(context, Icons.local_bar, 'Drinks', () {
+             Navigator.pop(context); // Close drawer
+             Navigator.push(context, MaterialPageRoute(builder: (context) => const DrinksScreen()));
+          }),
         ];
       case UserRole.customer:
         return [

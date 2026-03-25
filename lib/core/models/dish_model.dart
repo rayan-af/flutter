@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class DishModel {
   final String id;
   final String name;
@@ -9,6 +11,7 @@ class DishModel {
   final int calories;
   final String description;
   final List<String> ingredients;
+  final Map<String, double> recipe;
 
   const DishModel({
     required this.id,
@@ -21,14 +24,82 @@ class DishModel {
     required this.calories,
     required this.description,
     required this.ingredients,
+    this.recipe = const {},
   });
 
   static List<DishModel> get mockDishes => [
-    // Entrees
+    // --- Coffee & Beverages (Cafe Stock Style) ---
     const DishModel(
-      id: '1',
+      id: 'bev_1',
+      name: 'Caramel Macchiato',
+      imageUrl: 'https://images.unsplash.com/photo-1485808191679-5f8c7c97f3f2?q=80&w=800&auto=format&fit=crop',
+      price: 5.25,
+      rating: 4.8,
+      reviewCount: 320,
+      category: 'Coffee',
+      calories: 250,
+      description: 'Freshly steamed milk with vanilla-flavored syrup marked with espresso and topped with a caramel drizzle.',
+      ingredients: ['Espresso', 'Milk', 'Vanilla Syrup', 'Caramel Sauce'],
+      recipe: {'Espresso Beans': 18, 'Milk': 300, 'Vanilla Syrup': 2, 'Caramel Sauce': 10}, // g, ml, pumps, g
+    ),
+    const DishModel(
+      id: 'bev_2',
+      name: 'Cappuccino',
+      imageUrl: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?q=80&w=800&auto=format&fit=crop',
+      price: 4.50,
+      rating: 4.7,
+      reviewCount: 210,
+      category: 'Coffee',
+      calories: 120,
+      description: 'Dark, rich espresso lies in wait under a smoothed and stretched layer of thick milk foam.',
+      ingredients: ['Espresso', 'Milk'],
+      recipe: {'Espresso Beans': 18, 'Milk': 200},
+    ),
+    const DishModel(
+      id: 'bev_3',
+      name: 'Caffè Latte',
+      imageUrl: 'https://images.unsplash.com/photo-1593443320739-77f74952dabd?q=80&w=800&auto=format&fit=crop',
+      price: 4.50,
+      rating: 4.6,
+      reviewCount: 450,
+      category: 'Coffee',
+      calories: 190,
+      description: 'Our dark, rich espresso balanced with steamed milk and a light layer of foam.',
+      ingredients: ['Espresso', 'Milk'],
+      recipe: {'Espresso Beans': 18, 'Milk': 350},
+    ),
+    const DishModel(
+      id: 'bev_4',
+      name: 'Cold Brew',
+      imageUrl: 'https://images.unsplash.com/photo-1517701604599-bb29b5dd7359?q=80&w=800&auto=format&fit=crop',
+      price: 4.25,
+      rating: 4.9,
+      reviewCount: 150,
+      category: 'Coffee',
+      calories: 5,
+      description: 'Handcrafted in small batches daily, slow-steeped in cool water for 20 hours.',
+      ingredients: ['Cold Brew Concentrate', 'Water', 'Ice'],
+      recipe: {'Cold Brew Concentrate': 150, 'Water': 150},
+    ),
+    const DishModel(
+      id: 'bev_5',
+      name: 'Flat White',
+      imageUrl: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?q=80&w=800&auto=format&fit=crop',
+      price: 4.75,
+      rating: 4.8,
+      reviewCount: 180,
+      category: 'Coffee',
+      calories: 170,
+      description: 'Smooth ristretto shots of espresso get the perfect amount of steamed whole milk.',
+      ingredients: ['Espresso', 'Milk'],
+      recipe: {'Espresso Beans': 20, 'Milk': 250},
+    ),
+
+    // --- Food Items (Melting Pot / Bistro Style) ---
+    const DishModel(
+      id: 'food_1',
       name: 'Chicken Alfredo',
-      imageUrl: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?q=80&w=800&auto=format&fit=crop', // Generic Alfredo
+      imageUrl: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?q=80&w=800&auto=format&fit=crop',
       price: 26.49,
       rating: 4.8,
       reviewCount: 2500,
@@ -36,298 +107,186 @@ class DishModel {
       calories: 1570,
       description: 'Creamy homemade alfredo sauce tossed with fettuccine pasta and topped with grilled chicken.',
       ingredients: ['Fettuccine', 'Alfredo Sauce', 'Grilled Chicken', 'Parmesan'],
+      recipe: {'Fettuccine': 150, 'Alfredo Sauce': 200, 'Grilled Chicken': 1, 'Parmesan': 20},
     ),
     const DishModel(
-      id: '2',
-      name: 'Chicken Parmigiana',
-      imageUrl: 'https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?q=80&w=800&auto=format&fit=crop', // Generic Parmigiana
-      price: 20.29,
-      rating: 4.7,
-      reviewCount: 1800,
-      category: 'Entrees',
-      calories: 1020,
-      description: 'Two lightly fried parmesan-breaded chicken breasts covered with homemade marinara and melted Italian cheeses. Served with a side of spaghetti.',
-      ingredients: ['Chicken Breast', 'Marinara Sauce', 'Mozzarella', 'Spaghetti'],
-    ),
-    const DishModel(
-      id: '3',
-      name: 'Lasagna Classico',
-      imageUrl: 'https://images.unsplash.com/photo-1574868233972-150e33819c96?q=80&w=800&auto=format&fit=crop', // Generic Lasagna
-      price: 18.49,
-      rating: 4.9,
-      reviewCount: 3200,
-      category: 'Entrees',
-      calories: 940,
-      description: 'Layers of pasta, parmesan, mozzarella, pecorino romano and our homemade meat sauce.',
-      ingredients: ['Pasta Layers', 'Meat Sauce', 'Mozzarella', 'Ricotta', 'Parmesan'],
-    ),
-    const DishModel(
-      id: '4',
-      name: 'Shrimp Carbonara',
-      imageUrl: 'https://images.unsplash.com/photo-1612874742237-6526221588e3?q=80&w=800&auto=format&fit=crop', // Generic Carbonara
-      price: 23.49,
-      rating: 4.6,
-      reviewCount: 1200,
-      category: 'Entrees',
-      calories: 1200,
-      description: 'Sautéed shrimp and spaghetti tossed in a creamy sauce with bacon and roasted red peppers.',
-      ingredients: ['Shrimp', 'Spaghetti', 'Bacon', 'Roasted Red Peppers', 'Cream Sauce'],
-    ),
-    const DishModel(
-      id: '5',
-      name: 'Tour of Italy',
-      imageUrl: 'https://images.unsplash.com/photo-1528612030006-2586551f33f3?q=80&w=800&auto=format&fit=crop', // Generic Italian Feast
-      price: 22.49,
-      rating: 4.9,
-      reviewCount: 4500,
-      category: 'Entrees',
-      calories: 1550,
-      description: 'Three OG classics all on one plate! Chicken Parmigiana, Lasagna Classico and our signature Fettuccine Alfredo.',
-      ingredients: ['Chicken Parmigiana', 'Lasagna', 'Fettuccine Alfredo'],
-    ),
-
-    // Appetizers
-    const DishModel(
-      id: '6',
-      name: 'Fried Mozzarella',
-      imageUrl: 'https://images.unsplash.com/photo-1533728669866-9de831ac0f73?q=80&w=800&auto=format&fit=crop', // Generic Mozz sticks
-      price: 8.99,
-      rating: 4.5,
-      reviewCount: 900,
-      category: 'Appetizers',
-      calories: 800,
-      description: 'Fried mozzarella cheese topped with alfredo drizzle. Served with marinara sauce.',
-      ingredients: ['Mozzarella', 'Breadcrumbs', 'Marinara Sauce', 'Alfredo Drizzle'],
-    ),
-    const DishModel(
-      id: '7',
-      name: 'Calamari',
-      imageUrl: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop', // Generic Calamari
-      price: 12.29,
-      rating: 4.6,
-      reviewCount: 1100,
-      category: 'Appetizers',
-      calories: 670,
-      description: 'Tender calamari, lightly breaded and fried. Served with marinara sauce and spicy ranch.',
-      ingredients: ['Calamari', 'Marinara Sauce', 'Spicy Ranch'],
-    ),
-    const DishModel(
-      id: '8',
-      name: 'Spinach-Artichoke Dip',
-      imageUrl: 'https://images.unsplash.com/photo-1576506295286-5cda18df43e7?q=80&w=800&auto=format&fit=crop', // Generic Dip
-      price: 11.29,
-      rating: 4.7,
-      reviewCount: 1500,
-      category: 'Appetizers',
-      calories: 1160,
-      description: 'A blend of creamy spinach, artichokes, and five cheeses. Served with flatbread crisps.',
-      ingredients: ['Spinach', 'Artichokes', 'Five Cheese Blend', 'Flatbread Crisps'],
-    ),
-
-    // Desserts
-    const DishModel(
-      id: '9',
-      name: 'Tiramisu',
-      imageUrl: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=800&auto=format&fit=crop', // Generic Tiramisu
-      price: 8.99,
-      rating: 4.9,
-      reviewCount: 2800,
-      category: 'Desserts',
-      calories: 470,
-      description: 'The classic Italian dessert. A layer of creamy custard set atop espresso-soaked ladyfingers.',
-      ingredients: ['Espresso', 'Ladyfingers', 'Custard', 'Cocoa Powder'],
-    ),
-    const DishModel(
-      id: '10',
-      name: 'Black Tie Mousse Cake',
-      imageUrl: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=800&auto=format&fit=crop', // Generic Choc Cake
-      price: 9.49,
-      rating: 4.8,
-      reviewCount: 2000,
-      category: 'Desserts',
-      calories: 750,
-      description: 'Rich chocolate cake, dark chocolate cheesecake and creamy custard mousse.',
-      ingredients: ['Chocolate Cake', 'Dark Chocolate Cheesecake', 'Custard Mousse'],
-    ),
-    const DishModel(
-      id: '11',
-      name: 'Warm Italian Doughnuts',
-      imageUrl: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?q=80&w=800&auto=format&fit=crop', // Generic Doughnuts
-      price: 11.49,
-      rating: 4.7,
-      reviewCount: 1300,
-      category: 'Desserts',
-      calories: 810,
-      description: 'Fried doughnuts tossed in vanilla sugar. Served with raspberry or chocolate sauce.',
-      ingredients: ['Doughnuts', 'Vanilla Sugar', 'Raspberry Sauce', 'Chocolate Sauce'],
-    ),
-    // Burgers
-    const DishModel(
-      id: '12',
-      name: 'Bear Burger',
-      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop', // Generic Burger
+      id: 'food_2',
+      name: 'Classic Burger',
+      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop',
       price: 14.99,
       rating: 4.6,
       reviewCount: 500,
       category: 'Burgers',
       calories: 1100,
-      description: 'Our signature burger! Double patty topped with bacon, cheddar, lettuce, tomato, and pickle.',
-      ingredients: ['Beef Patties', 'Bacon', 'Cheddar', 'Lettuce', 'Tomato', 'Pickle', 'Bun'],
+      description: 'Juicy beef patty topped with lettuce, tomato, and onion on a brioche bun.',
+      ingredients: ['Beef Patty', 'Lettuce', 'Tomato', 'Bun', 'Cheese'],
+      recipe: {'Beef Patty': 1, 'Lettuce': 1, 'Tomato': 1, 'Bun': 1, 'Cheddar Cheese': 1},
     ),
     const DishModel(
-      id: '13',
-      name: 'Mushroom Swiss Burger',
-      imageUrl: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=800&auto=format&fit=crop', // Generic Mushroom Swiss
-      price: 13.49,
-      rating: 4.7,
-      reviewCount: 420,
-      category: 'Burgers',
-      calories: 950,
-      description: 'Juicy beef patty topped with sautéed wild mushrooms and melted Swiss cheese.',
-      ingredients: ['Beef Patty', 'Swiss Cheese', 'Mushrooms', 'Bun'],
-    ),
-    const DishModel(
-      id: '14',
-      name: 'Oasis Cheeseburger',
-      imageUrl: 'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop', // Generic Cheeseburger
-      price: 12.49,
-      rating: 4.5,
-      reviewCount: 600,
-      category: 'Burgers',
-      calories: 900,
-      description: 'Classic cheeseburger with American cheese, lettuce, tomato, and onion.',
-      ingredients: ['Beef Patty', 'American Cheese', 'Lettuce', 'Tomato', 'Onion', 'Bun'],
-    ),
-
-    // Sandwiches
-    const DishModel(
-      id: '15',
-      name: 'Oasis Club Sandwich',
-      imageUrl: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?q=80&w=800&auto=format&fit=crop', // Generic Club
-      price: 11.99,
-      rating: 4.8,
-      reviewCount: 350,
-      category: 'Sandwiches',
-      calories: 750,
-      description: 'Triple-decker sandwich with turkey, ham, bacon, lettuce, tomato, and mayo.',
-      ingredients: ['Turkey', 'Ham', 'Bacon', 'Lettuce', 'Tomato', 'Mayo', 'Toast'],
-    ),
-    const DishModel(
-      id: '16',
-      name: 'Grilled Cheese',
-      imageUrl: 'https://images.unsplash.com/photo-1528736235302-52922dfa4e51?q=80&w=800&auto=format&fit=crop', // Generic Grilled Cheese
-      price: 8.99,
-      rating: 4.4,
-      reviewCount: 200,
-      category: 'Sandwiches',
-      calories: 600,
-      description: 'Golden toasted bread filled with melted American and Cheddar cheeses.',
-      ingredients: ['American Cheese', 'Cheddar Cheese', 'Bread', 'Butter'],
-    ),
-
-    // Sides & Salads
-    const DishModel(
-      id: '17',
-      name: 'Loaded Fries',
-      imageUrl: 'https://images.unsplash.com/photo-1585109649139-36680186c5d1?q=80&w=800&auto=format&fit=crop', // Generic Loaded Fries
-      price: 9.99,
-      rating: 4.9,
-      reviewCount: 800,
-      category: 'Sides',
-      calories: 1200,
-      description: 'Crispy fries topped with melted cheese, bacon bits, jalapenos, and ranch drizzle.',
-      ingredients: ['Fries', 'Cheese Sauce', 'Bacon', 'Jalapenos', 'Ranch'],
-    ),
-    const DishModel(
-      id: '18',
-      name: 'Oasis Salad',
-      imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop', // Generic Salad
-      price: 10.99,
+      id: 'food_3',
+      name: 'Avocado Toast',
+      imageUrl: 'https://images.unsplash.com/photo-1588137372308-15f75323a51d?q=80&w=800&auto=format&fit=crop',
+      price: 12.50,
       rating: 4.7,
       reviewCount: 300,
-      category: 'Salads',
+      category: 'Breakfast',
       calories: 450,
-      description: 'Fresh greens with edamame, veggies, crispy wontons, and citrus vinaigrette.',
-      ingredients: ['Mixed Greens', 'Edamame', 'Wontons', 'Vinaigrette'],
+      description: 'Sourdough toast topped with smashed avocado, poached egg, and chili flakes.',
+      ingredients: ['Bread', 'Avocado', 'Egg', 'Spices'],
+      recipe: {'Sourdough Bread': 2, 'Avocado': 1, 'Egg': 1},
     ),
-
-    // Chili's Items
-    // Fajitas
+    
+    // --- Chili's Inspired Additions ---
     const DishModel(
-      id: '19',
-      name: 'Mix & Match Fajitas',
-      imageUrl: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?q=80&w=800&auto=format&fit=crop', // Generic Fajitas
-      price: 18.99,
+      id: 'chilis_1',
+      name: 'Texas Cheese Fries',
+      imageUrl: 'https://images.unsplash.com/photo-1584948922247-f37b92bbcb40?q=80&w=800&auto=format&fit=crop',
+      price: 10.49,
       rating: 4.8,
-      reviewCount: 1500,
-      category: 'Fajitas',
-      calories: 1100,
-      description: 'Sizzling fajitas with your choice of two proteins: Chicken, Steak, or Shrimp. Served with mexican rice, black beans, and flour tortillas.',
-      ingredients: ['Chicken/Steak/Shrimp', 'Peppers', 'Onions', 'Rice', 'Beans', 'Tortillas', 'Guacamole'],
+      reviewCount: 2045,
+      category: 'Appetizers',
+      calories: 1240,
+      description: 'Shredded cheese, bacon, jalapeños, green onions. Served with house-made ranch.',
+      ingredients: ['Fries', 'Cheese Blend', 'Bacon', 'Jalapeños', 'Ranch'],
+      recipe: {'Fries': 300, 'Cheese': 100, 'Bacon': 30, 'Ranch': 50},
     ),
     const DishModel(
-      id: '20',
-      name: 'Chicken Fajitas',
-      imageUrl: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?q=80&w=800&auto=format&fit=crop', // Generic Chicken Tacos/Fajitas
-      price: 16.49,
-      rating: 4.7,
-      reviewCount: 1200,
-      category: 'Fajitas',
-      calories: 980,
-      description: 'Grilled chicken breast with bell peppers and onions. Served with all the fixings.',
-      ingredients: ['Grilled Chicken', 'Bell Peppers', 'Onions', 'Sour Cream', 'Pico de Gallo', 'Salsa'],
-    ),
-
-    // Ribs
-    const DishModel(
-      id: '21',
-      name: 'Original Baby Back Ribs',
-      imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&auto=format&fit=crop', // Generic Ribs
-      price: 22.99,
-      rating: 4.9,
-      reviewCount: 2200,
-      category: 'Ribs',
-      calories: 1400,
-      description: 'Our world-famous baby back ribs, slow-cooked and smoked in-house over pecan wood. Served with fries and coleslaw.',
-      ingredients: ['Pork Ribs', 'BBQ Sauce', 'Fries', 'Coleslaw'],
-    ),
-    const DishModel(
-      id: '22',
-      name: 'Smokehouse Combo',
-      imageUrl: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?q=80&w=800&auto=format&fit=crop', // Generic BBQ Combo
+      id: 'chilis_2',
+      name: 'Classic Chicken Fajitas',
+      imageUrl: 'https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?q=80&w=800&auto=format&fit=crop',
       price: 19.99,
-      rating: 4.8,
-      reviewCount: 1800,
-      category: 'Ribs',
-      calories: 1250,
-      description: 'Choose any two meat favorites: Half Rack of Ribs, Brisket, or Crispy Chicken Crispers. Served with corn on the cob and fries.',
-      ingredients: ['Ribs', 'Brisket/Chicken', 'Corn', 'Fries', 'Garlic Toast'],
-    ),
-
-    // More Burgers (Chili's)
-    const DishModel(
-      id: '23',
-      name: 'Oldtimer w/ Cheese',
-      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop', // Generic Burger
-      price: 11.29,
-      rating: 4.6,
-      reviewCount: 950,
-      category: 'Burgers',
-      calories: 850,
-      description: 'The burger that started it all. pickles, lettuce, tomato, red onion and mustard.',
-      ingredients: ['Beef Patty', 'Cheddar', 'Pickles', 'Lettuce', 'Tomato', 'Mustard', 'Bun'],
+      rating: 4.7,
+      reviewCount: 1530,
+      category: 'Fajitas',
+      calories: 890,
+      description: 'With bell peppers & onions, topped with cilantro. Served with Mexican rice, black beans, and flour tortillas.',
+      ingredients: ['Chicken Breast', 'Bell Peppers', 'Onions', 'Tortillas', 'Rice', 'Beans'],
+      recipe: {'Chicken': 200, 'Peppers': 100, 'Onions': 50, 'Tortillas': 3},
     ),
     const DishModel(
-      id: '24',
-      name: 'Big Bacon BBQ Burger',
-      imageUrl: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=800&auto=format&fit=crop', // Generic Bacon BBQ
-      price: 14.49,
-      rating: 4.8,
-      reviewCount: 1100,
+      id: 'chilis_3',
+      name: 'Presidente Margarita®',
+      imageUrl: 'https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?q=80&w=800&auto=format&fit=crop',
+      price: 8.50,
+      rating: 4.9,
+      reviewCount: 3200,
+      category: 'Drinks',
+      calories: 280,
+      description: 'Hand-shaken Margarita featuring Lunazul Reposado Tequila, Citrónge Extra Fine Orange Liqueur and E&J Brandy.',
+      ingredients: ['Tequila', 'Orange Liqueur', 'Brandy', 'Sour Mix', 'Lime'],
+      recipe: {'Tequila': 45, 'Orange Liqueur': 15, 'Brandy': 10, 'Sour Mix': 60},
+    ),
+    
+    // --- New Premium Additions ---
+    const DishModel(
+      id: 'new_1',
+      name: 'Truffle Parmesan Fries',
+      imageUrl: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?q=80&w=800&auto=format&fit=crop',
+      price: 12.00,
+      rating: 4.9,
+      reviewCount: 412,
+      category: 'Appetizers',
+      calories: 650,
+      description: 'Crispy shoestring fries tossed in white truffle oil, topped with aged parmesan and fresh parsley. Served with garlic aioli.',
+      ingredients: ['Potatoes', 'Truffle Oil', 'Parmesan', 'Parsley', 'Garlic Aioli'],
+      recipe: {'Potatoes': 250, 'Truffle Oil': 10, 'Parmesan': 30, 'Garlic Aioli': 45},
+    ),
+    const DishModel(
+      id: 'new_2',
+      name: 'Wagyu Beef Burger',
+      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop',
+      price: 24.50,
+      rating: 4.9,
+      reviewCount: 890,
       category: 'Burgers',
-      calories: 1300,
-      description: 'Two beef patties, six slices of bacon, house BBQ sauce, cheddar, red onion and pickles.',
-      ingredients: ['Double Beef Patty', 'Bacon', 'BBQ Sauce', 'Cheddar', 'Onion', 'Pickles'],
+      calories: 1200,
+      description: 'Premium half-pound Wagyu beef patty, caramelized onions, gruyère cheese, and house sauce on a toasted brioche bun.',
+      ingredients: ['Wagyu Beef', 'Gruyère Cheese', 'Caramelized Onions', 'Brioche Bun', 'House Sauce'],
+      recipe: {'Wagyu Patty': 1, 'Gruyère': 2, 'Onions': 50, 'Bun': 1, 'House Sauce': 30},
+    ),
+    const DishModel(
+      id: 'new_3',
+      name: 'Matcha Green Tea Latte',
+      imageUrl: 'https://images.unsplash.com/photo-1515823662415-e0fd0ca128b4?q=80&w=800&auto=format&fit=crop',
+      price: 5.75,
+      rating: 4.8,
+      reviewCount: 560,
+      category: 'Coffee',
+      calories: 210,
+      description: 'Smooth and creamy matcha sweetened just right and served with steamed milk.',
+      ingredients: ['Matcha Powder', 'Milk', 'Simple Syrup'],
+      recipe: {'Matcha Powder': 15, 'Milk': 250, 'Simple Syrup': 10},
+    ),
+    const DishModel(
+      id: 'new_4',
+      name: 'Classic Tiramisu',
+      imageUrl: 'https://images.unsplash.com/photo-1571115177098-24c42d5e0513?q=80&w=800&auto=format&fit=crop',
+      price: 9.50,
+      rating: 4.9,
+      reviewCount: 340,
+      category: 'Desserts',
+      calories: 480,
+      description: 'Layers of espresso-soaked ladyfingers and lightly sweetened mascarpone cream, dusted with cocoa powder.',
+      ingredients: ['Ladyfingers', 'Espresso', 'Mascarpone', 'Cocoa Powder', 'Sugar'],
+      recipe: {'Ladyfingers': 50, 'Espresso': 30, 'Mascarpone': 80, 'Cocoa Powder': 5},
+    ),
+    const DishModel(
+      id: 'new_5',
+      name: 'Grilled Chicken Caesar',
+      imageUrl: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?q=80&w=800&auto=format&fit=crop',
+      price: 16.00,
+      rating: 4.7,
+      reviewCount: 425,
+      category: 'Salads',
+      calories: 550,
+      description: 'Crisp romaine lettuce, garlic croutons, and shaved parmesan, tossed in creamy Caesar dressing and topped with grilled chicken breast.',
+      ingredients: ['Romaine Lettuce', 'Grilled Chicken', 'Parmesan', 'Croutons', 'Caesar Dressing'],
+      recipe: {'Romaine': 150, 'Chicken': 150, 'Parmesan': 20, 'Croutons': 30, 'Dressing': 50},
+    ),
+    const DishModel(
+      id: 'new_6',
+      name: 'Spicy Mango Margarita',
+      imageUrl: 'https://images.unsplash.com/photo-1587223075055-82e9a937ddff?q=80&w=800&auto=format&fit=crop',
+      price: 11.50,
+      rating: 4.8,
+      reviewCount: 275,
+      category: 'Drinks',
+      calories: 220,
+      description: 'Silver tequila, triple sec, mango purée, and fresh lime juice, shaken with muddled jalapeños and served with a Tajín rim.',
+      ingredients: ['Tequila', 'Triple Sec', 'Mango Purée', 'Lime Juice', 'Jalapeño'],
+      recipe: {'Tequila': 50, 'Triple Sec': 15, 'Mango Purée': 45, 'Lime Juice': 15, 'Jalapeño': 5},
     ),
   ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'imageUrl': imageUrl,
+      'price': price,
+      'rating': rating,
+      'reviewCount': reviewCount,
+      'category': category,
+      'calories': calories,
+      'description': description,
+      'ingredients': ingredients,
+      'recipe': recipe,
+    };
+  }
+
+  factory DishModel.fromMap(Map<String, dynamic> map, String documentId) {
+    return DishModel(
+      id: documentId,
+      name: map['name'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
+      price: (map['price'] ?? 0).toDouble(),
+      rating: (map['rating'] ?? 0).toDouble(),
+      reviewCount: map['reviewCount'] ?? 0,
+      category: map['category'] ?? '',
+      calories: map['calories'] ?? 0,
+      description: map['description'] ?? '',
+      ingredients: List<String>.from(map['ingredients'] ?? []),
+      recipe: Map<String, double>.from(map['recipe'] ?? {}),
+    );
+  }
 }

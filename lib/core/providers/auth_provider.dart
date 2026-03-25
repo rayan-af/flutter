@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_model.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -9,32 +11,46 @@ class AuthProvider extends ChangeNotifier {
   bool get isAuthenticated => _currentUser != null;
 
   Future<bool> login(String email, String password) async {
-    // Mock Login Logic with Hardcoded Credentials
-    await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
+    try {
+      UserCredential userCredential;
+      try {
+        userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found' || e.code == 'invalid-credential' || e.code == 'invalid-login-credentials') {
+          // Auto-register for dev purposes based on the credentials
+          userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          );
+          String role = (email == 'sinai@gmail.com' || email == 'manager@gmail.com') ? 'admin' : 'staff';
+          await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+            'email': email,
+            'role': role,
+            'name': email.split('@')[0],
+          });
+        } else {
+          rethrow; // Other errors like network issue
+        }
+      }
 
-    if (email == 'manager@gmail.com' && password == '1234') {
+      // Fetch user role from Firestore
+      final doc = await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).get();
+      final roleStr = doc.data()?['role'] ?? 'staff';
       _currentUser = UserModel(
-        id: 'manager_01',
+        id: userCredential.user!.uid,
         email: email,
-        name: "Manager User",
-        role: UserRole.manager,
+        name: doc.data()?['name'] ?? 'User',
+        role: roleStr == 'admin' ? UserRole.manager : UserRole.employee,
       );
       notifyListeners();
       return true;
+    } catch (e) {
+      debugPrint("Login error: $e");
+      return false;
     }
-
-    if ((email == 'sinai@gmail.com' || email == 'sinai@gmai.com') && password == '1234') {
-      _currentUser = UserModel(
-        id: 'staff_01',
-        email: email,
-        name: "Sinai Staff",
-        role: UserRole.employee,
-      );
-      notifyListeners();
-      return true;
-    }
-
-    return false;
   }
 
   void loginAsGuest() {
@@ -47,9 +63,9 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void logout() {
+  void logout() async {
+    await FirebaseAuth.instance.signOut();
     _currentUser = null;
     notifyListeners();
   }
 }
-

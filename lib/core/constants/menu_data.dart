@@ -226,5 +226,71 @@ const Map<String, dynamic> menuData = {
         ]
       }
     ]
+  },
+  "Chilis": {
+    "Food": [
+      {
+        "category": "Appetizers",
+        "items": [
+          {
+            "name": "Texas Cheese Fries",
+            "description": "Shredded cheese, bacon, jalapeños, green onions. Served with house-made ranch."
+          },
+          {
+            "name": "Skillet Queso",
+            "description": "Original with beef. Served with chips & salsa."
+          },
+          {
+            "name": "Chips & Salsa",
+            "description": "Extra-thin corn tostada chips made fresh daily. Served with our fresh salsa."
+          }
+        ]
+      },
+      {
+        "category": "Big Mouth Burgers",
+        "items": [
+          {
+            "name": "Oldtimer® with Cheese",
+            "description": "The original mustard, shredded lettuce, tomato, pickle, onion, cheddar."
+          },
+          {
+            "name": "Bacon Rancher",
+            "description": "Two beef patties, six slices of bacon, house-made ranch, American cheese, with sauteed onions, pickles."
+          },
+          {
+            "name": "Mushroom Swiss Burger",
+            "description": "Sauteed onions, mushrooms, Swiss, lettuce, tomato, garlic aioli."
+          }
+        ]
+      },
+      {
+        "category": "Fajitas",
+        "items": [
+          {
+            "name": "Chicken Fajitas",
+            "description": "With bell peppers & onions, topped with cilantro. Served with Mexican rice, black beans."
+          },
+          {
+            "name": "Steak Fajitas",
+            "description": "With bell peppers & onions, topped with cilantro. Served with Mexican rice, black beans."
+          }
+        ]
+      }
+    ],
+    "Drinks": [
+      {
+        "category": "Margaritas",
+        "items": [
+          {
+            "name": "Presidente Margarita®",
+            "description": "Lunazul Reposado Tequila, Citrónge Extra Fine Orange Liqueur and E&J Brandy."
+          },
+          {
+            "name": "Patrón® Blackberry Margarita",
+            "description": "Patrón Reposado Tequila and Cointreau shaken with blackberry."
+          }
+        ]
+      }
+    ]
   }
 };

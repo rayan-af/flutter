@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/models/dish_model.dart';
+import '../widgets/custom_drawer.dart';
 import 'dish_detail_screen.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -43,21 +45,40 @@ class MenuScreen extends StatelessWidget {
     return DefaultTabController(
       length: displayCategories.length,
       child: Scaffold(
+        drawer: const CustomDrawer(),
         appBar: AppBar(
           title: const Text("Our Menu"),
           backgroundColor: theme.appBarTheme.backgroundColor,
           foregroundColor: theme.appBarTheme.foregroundColor,
-          bottom: TabBar(
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
-            indicatorColor: theme.primaryColor,
-            labelColor: theme.primaryColor,
-            unselectedLabelColor: theme.colorScheme.onSurface.withValues(
-              alpha: 0.7,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(64),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: TabBar(
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
+                dividerColor: Colors.transparent,
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(28),
+                  color: theme.primaryColor,
+                ),
+                indicatorSize: TabBarIndicatorSize.tab,
+                labelColor: theme.colorScheme.onPrimary,
+                unselectedLabelColor: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                splashBorderRadius: BorderRadius.circular(28),
+                tabs: displayCategories
+                    .map((category) => Tab(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              category,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ))
+                    .toList(),
+              ),
             ),
-            tabs: displayCategories
-                .map((category) => Tab(text: category))
-                .toList(),
           ),
         ),
         body: TabBarView(
@@ -68,7 +89,10 @@ class MenuScreen extends StatelessWidget {
               itemCount: dishes.length,
               itemBuilder: (context, index) {
                 final dish = dishes[index];
-                return _buildDishItem(context, theme, dish);
+                return _DishItemCard(dish: dish)
+                    .animate(delay: (index * 50).ms)
+                    .slideY(begin: 0.2, end: 0, duration: 400.ms, curve: Curves.easeOutQuart)
+                    .fadeIn(duration: 400.ms);
               },
             );
           }).toList(),
@@ -76,103 +100,161 @@ class MenuScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildDishItem(BuildContext context, ThemeData theme, DishModel dish) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-      elevation: 4,
-      color: theme.cardColor,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(28),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DishDetailScreen(dish: dish),
-            ),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(28),
-                child: Image.network(
-                  dish.imageUrl,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    width: 100,
-                    height: 100,
-                    color: theme.colorScheme.surface,
-                    child: const Icon(Icons.restaurant, size: 40),
-                  ),
-                ),
+class _DishItemCard extends StatefulWidget {
+  final DishModel dish;
+
+  const _DishItemCard({required this.dish});
+
+  @override
+  State<_DishItemCard> createState() => _DishItemCardState();
+}
+
+class _DishItemCardState extends State<_DishItemCard> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+        elevation: _isHovered ? 8 : 0,
+        color: _isHovered 
+            ? theme.colorScheme.surface 
+            : theme.cardTheme.color ?? theme.colorScheme.surfaceContainerHigh,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(28),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DishDetailScreen(dish: widget.dish),
               ),
-              const SizedBox(width: 16),
-              // Details
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      dish.name,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      dish.description,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurface.withValues(
-                          alpha: 0.7,
-                        ),
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "\$${dish.price.toStringAsFixed(2)}",
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            color: theme.primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.star,
-                              size: 16,
-                              color: Colors.orange,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              "${dish.rating}",
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Image
+                Hero(
+                  tag: 'dish_image_${widget.dish.id}',
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.08),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
                         ),
                       ],
                     ),
-                  ],
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(24),
+                      child: Image.network(
+                        widget.dish.imageUrl,
+                        width: 110,
+                        height: 110,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          width: 110,
+                          height: 110,
+                          color: theme.colorScheme.surfaceContainerHighest,
+                          child: Icon(Icons.restaurant, size: 40, color: theme.colorScheme.onSurface.withValues(alpha: 0.5)),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 20),
+                // Details
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.dish.name,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        widget.dish.description,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.6,
+                          ),
+                          height: 1.3,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "\$${widget.dish.price.toStringAsFixed(2)}",
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: theme.primaryColor,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Icon(
+                                Icons.star_rounded,
+                                size: 18,
+                                color: Colors.orange.shade400,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                "${widget.dish.rating}",
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
+                                ),
+                              ),
+                            ],
+                          ),
+                          // Add Button
+                          Container(
+                            decoration: BoxDecoration(
+                              color: theme.primaryColor,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: Icon(
+                              Icons.add_rounded,
+                              size: 20,
+                              color: theme.colorScheme.onPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      ).animate(target: _isHovered ? 1 : 0)
+       .scaleXY(end: 1.02, duration: 250.ms, curve: Curves.easeOutBack)
+       .tint(color: theme.primaryColor.withValues(alpha: 0.02), end: 1),
     );
   }
 }
+

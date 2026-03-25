@@ -1,0 +1,19 @@
+{
+  "name": "Zen Stock - Cafe Management Platform",
+  "version": "1.0.0",
+  "agent_roles": {
+    "inventory_agent": {
+      "capabilities": ["read_stock", "analyze_trends"],
+      "endpoints": {
+        "stock_sync": "/api/v1/stock/status"
+      }
+    },
+    "merchant_agent": {
+      "capabilities": ["accept_orders", "process_ap2_payments"],
+      "endpoints": {
+        "checkout": "/api/v1/checkout/intent"
+      }
+    }
+  },
+  "protocols_supported": ["A2A", "UCP", "AP2"]
+}

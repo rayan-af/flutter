@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/providers/auth_provider.dart';
+import '../../core/providers/inventory_provider.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -45,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       if (success) {
+        Provider.of<InventoryProvider>(context, listen: false).initialize();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const HomeScreen()),

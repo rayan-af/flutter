@@ -4,8 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/providers/inventory_provider.dart';
 import '../../../core/services/firestore_service.dart';
-import '../../widgets/custom_drawer.dart';
+// import '../../widgets/custom_drawer.dart';
+import '../../widgets/custom_bottom_nav.dart';
 import '../inventory/inventory_screen.dart';
+import '../../../l10n/app_localizations.dart';
+
 
 class ManagerDashboardScreen extends StatefulWidget {
   const ManagerDashboardScreen({super.key});
@@ -30,6 +33,7 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final inventoryProvider = Provider.of<InventoryProvider>(context);
+    final l10n = AppLocalizations.of(context)!;
     List<dynamic> lowStockItems = inventoryProvider.lowStockItems;
     int totalItems = inventoryProvider.items.length;
     double healthPercent = totalItems == 0 ? 0.0 : ((totalItems - lowStockItems.length) / totalItems) * 100;
@@ -37,13 +41,13 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: bgDark,
-      drawer: const CustomDrawer(),
+      // drawer: const CustomDrawer(),
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu_rounded, color: Colors.white),
-          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-        ),
-        title: Text('Intelligence Dashboard', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: textPrimary)),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.menu_rounded, color: Colors.white),
+        //   onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+        // ),
+        title: Text(l10n.dashTitle, style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: textPrimary)),
         backgroundColor: bgDark,
         elevation: 0,
         actions: [
@@ -70,7 +74,7 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
               int activeOrders = _calculateActiveOrders(ordersDocs);
               double wasteLoss = _calculateWasteLoss(wasteDocs);
               
-              List<LiveActivity> activityFeed = _buildActivityFeed(ordersDocs, wasteDocs);
+              List<LiveActivity> activityFeed = _buildActivityFeed(ordersDocs, wasteDocs, l10n);
 
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(24.0),
@@ -78,19 +82,25 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (lowStockItems.isNotEmpty)
-                      _buildPriorityAlert(lowStockItems)
+                      _buildPriorityAlert(lowStockItems, l10n)
                           .animate().fade(duration: 400.ms).slideY(begin: -0.1),
                     if (lowStockItems.isNotEmpty) const SizedBox(height: 24),
                     
-                    Text('KEY METRICS', style: TextStyle(color: textSecondary, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+                    Text(l10n.keyMetrics, style: TextStyle(color: textSecondary, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
                     const SizedBox(height: 16),
-                    _buildMetricsGrid(dailySales, activeOrders, wasteLoss, healthPercent)
+                    _buildMetricsGrid(dailySales, activeOrders, wasteLoss, healthPercent, l10n)
                         .animate().fade(duration: 500.ms).slideY(begin: 0.1),
                     
                     const SizedBox(height: 32),
-                    Text('LIVE ACTIVITY FEED', style: TextStyle(color: textSecondary, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+                    Text(l10n.quickActions, style: TextStyle(color: textSecondary, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
                     const SizedBox(height: 16),
-                    _buildActivityFeedList(activityFeed)
+                    _buildQuickActions(context, l10n)
+                        .animate(delay: 100.ms).fade(duration: 500.ms).slideY(begin: 0.1),
+                        
+                    const SizedBox(height: 32),
+                    Text(l10n.liveActivity, style: TextStyle(color: textSecondary, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
+                    const SizedBox(height: 16),
+                    _buildActivityFeedList(activityFeed, l10n)
                         .animate(delay: 200.ms).fade(duration: 500.ms).slideY(begin: 0.1),
                   ],
                 ),
@@ -99,10 +109,11 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
           );
         }
       ),
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 
-  Widget _buildPriorityAlert(List<dynamic> lowStockItems) {
+  Widget _buildPriorityAlert(List<dynamic> lowStockItems, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -118,23 +129,68 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('CRITICAL: LOW STOCK', style: TextStyle(color: warningRose, fontWeight: FontWeight.bold, fontSize: 14)),
+                Text(l10n.lowStockAlert, style: TextStyle(color: warningRose, fontWeight: FontWeight.bold, fontSize: 14)),
                 const SizedBox(height: 4),
-                Text('${lowStockItems.length} items have dropped below their minimum threshold.', style: TextStyle(color: warningRose.withOpacity(0.9), fontSize: 13)),
+                Text(l10n.lowStockCount(lowStockItems.length), style: TextStyle(color: warningRose.withOpacity(0.9), fontSize: 13)),
               ],
             ),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const InventoryScreen(isReadOnly: false))),
             style: ElevatedButton.styleFrom(backgroundColor: warningRose, foregroundColor: Colors.white),
-            child: const Text('Resolve'),
+            child: Text(l10n.resolve),
           )
         ],
       ),
     );
   }
 
-  Widget _buildMetricsGrid(double sales, int activeOrders, double waste, double health) {
+  Widget _buildQuickActions(BuildContext context, AppLocalizations l10n) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: surfaceDark,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.resetPopDishes, style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 14)),
+                const SizedBox(height: 4),
+                Text(l10n.resetPopDishesSub, style: TextStyle(color: textSecondary, fontSize: 12)),
+              ],
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: () async {
+              await FirestoreService().resetPopularDishesStats();
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(l10n.resetPopDishesSuccess),
+                    backgroundColor: tealAccent,
+                  ),
+                );
+              }
+            },
+            icon: const Icon(Icons.refresh_rounded, size: 18),
+            label: Text(l10n.reset),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: electricBlue.withOpacity(0.1),
+              foregroundColor: electricBlue,
+              elevation: 0,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMetricsGrid(double sales, int activeOrders, double waste, double health, AppLocalizations l10n) {
     final isDesktop = MediaQuery.of(context).size.width >= 1024;
     return GridView.count(
       crossAxisCount: isDesktop ? 4 : 2,
@@ -144,10 +200,10 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
       mainAxisSpacing: 16,
       childAspectRatio: 1.4,
       children: [
-        _buildMetricTile('Daily Sales', '\$${sales.toStringAsFixed(2)}', Icons.payments_rounded, electricBlue),
-        _buildMetricTile('Active Orders', '$activeOrders', Icons.room_service_rounded, warningOrange),
-        _buildMetricTile('Waste Loss (7d)', '\$${waste.toStringAsFixed(2)}', Icons.delete_sweep_rounded, warningRose),
-        _buildMetricTile('Inventory Health', '${health.toStringAsFixed(1)}%', Icons.health_and_safety_rounded, tealAccent),
+        _buildMetricTile(l10n.dailySales, '\$${sales.toStringAsFixed(2)}', Icons.payments_rounded, electricBlue),
+        _buildMetricTile(l10n.activeOrders, '$activeOrders', Icons.room_service_rounded, warningOrange),
+        _buildMetricTile(l10n.wasteLoss, '\$${waste.toStringAsFixed(2)}', Icons.delete_sweep_rounded, warningRose),
+        _buildMetricTile(l10n.invHealth, '${health.toStringAsFixed(1)}%', Icons.health_and_safety_rounded, tealAccent),
       ],
     );
   }
@@ -177,13 +233,13 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
     );
   }
 
-  Widget _buildActivityFeedList(List<LiveActivity> activities) {
+  Widget _buildActivityFeedList(List<LiveActivity> activities, AppLocalizations l10n) {
     if (activities.isEmpty) {
       return Container(
         padding: const EdgeInsets.all(32),
         alignment: Alignment.center,
         decoration: BoxDecoration(color: surfaceDark, borderRadius: BorderRadius.circular(16)),
-        child: Text('No recent activity recorded.', style: TextStyle(color: textSecondary)),
+        child: Text(l10n.noActivity, style: TextStyle(color: textSecondary)),
       );
     }
     
@@ -258,7 +314,7 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
     return sum;
   }
 
-  List<LiveActivity> _buildActivityFeed(List<QueryDocumentSnapshot> orders, List<QueryDocumentSnapshot> wastes) {
+  List<LiveActivity> _buildActivityFeed(List<QueryDocumentSnapshot> orders, List<QueryDocumentSnapshot> wastes, AppLocalizations l10n) {
     List<LiveActivity> feed = [];
     
     // Add Orders
@@ -267,10 +323,11 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
       if (data == null) continue;
       final ts = data['timestamp'] as Timestamp?;
       if (ts != null) {
-        final total = (data['total'] as num?)?.toDouble() ?? 0.0;
+        final totalValue = (data['total'] as num?)?.toDouble() ?? 0.0;
+        final statusValue = data['status'] ?? 'completed';
         feed.add(LiveActivity(
-          'New Order Created',
-          'Total: \$${total.toStringAsFixed(2)} | Status: ${data['status'] ?? 'completed'}',
+          l10n.newOrderActivity,
+          '${l10n.total}: \$${totalValue.toStringAsFixed(2)} | ${l10n.status}: $statusValue',
           ts.toDate(),
           Icons.receipt_long_rounded,
           electricBlue,
@@ -284,11 +341,12 @@ class _ManagerDashboardScreenState extends State<ManagerDashboardScreen> {
       if (data == null) continue;
       final ts = data['timestamp'] as Timestamp?;
       if (ts != null) {
-        final cost = (data['cost_lost'] as num?)?.toDouble() ?? 0.0;
-        final qty = data['quantity'] ?? 0;
+        final costValue = (data['cost_lost'] as num?)?.toDouble() ?? 0.0;
+        final qtyValue = data['quantity'] ?? 0;
+        final reasonValue = data['reason'] ?? 'unknown';
         feed.add(LiveActivity(
-          'Waste Logged',
-          'Lost \$${cost.toStringAsFixed(2)} | Qty: $qty | Reason: ${data['reason']}',
+          l10n.wasteLoggedActivity,
+          '${l10n.lost}: \$${costValue.toStringAsFixed(2)} | ${l10n.qty}: $qtyValue | ${l10n.reason}: $reasonValue',
           ts.toDate(),
           Icons.delete_outline,
           warningRose,

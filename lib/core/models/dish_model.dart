@@ -12,6 +12,7 @@ class DishModel {
   final String description;
   final List<String> ingredients;
   final Map<String, double> recipe;
+  final int orderCount;
 
   const DishModel({
     required this.id,
@@ -25,6 +26,7 @@ class DishModel {
     required this.description,
     required this.ingredients,
     this.recipe = const {},
+    this.orderCount = 0,
   });
 
   static List<DishModel> get mockDishes => [
@@ -271,6 +273,7 @@ class DishModel {
       'description': description,
       'ingredients': ingredients,
       'recipe': recipe,
+      'orderCount': orderCount,
     };
   }
 
@@ -287,6 +290,7 @@ class DishModel {
       description: map['description'] ?? '',
       ingredients: List<String>.from(map['ingredients'] ?? []),
       recipe: Map<String, double>.from(map['recipe'] ?? {}),
+      orderCount: map['orderCount'] ?? 0,
     );
   }
 }

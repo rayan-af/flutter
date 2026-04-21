@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/providers/auth_provider.dart';
 import '../../core/models/dish_model.dart';
-import '../widgets/custom_drawer.dart';
+import '../widgets/custom_bottom_nav.dart';
 import '../widgets/home/restaurant_card.dart';
 import 'reservation/reservation_screen.dart';
+import 'features/ai_assistant_screen.dart';
+import '../../core/services/firestore_service.dart';
+import '../../l10n/app_localizations.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,37 +34,80 @@ class _HomeScreenState extends State<HomeScreen> {
     final authAndUser = Provider.of<AuthProvider>(context);
     final user = authAndUser.currentUser;
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
-    // Filter Lists
-    final allDishes = DishModel.mockDishes;
-    final displayedDishes = _selectedCategory == "All"
-        ? allDishes
-        : allDishes.where((d) => d.category == _selectedCategory).toList();
-
-    // Split into "Popular" and "New" for demo purposes
-    // (In a real app, this would be based on backend flags or logic)
-    final popularDishes = displayedDishes
-        .where((d) => d.rating >= 4.8)
-        .toList();
-    final newDishes = displayedDishes.where((d) => d.rating < 4.8).toList();
+    // Categories with display names
+    final Map<String, String> categoryNames = {
+      "All": l10n.catAll,
+      "Fast food": l10n.catFastFood,
+      "Casual": l10n.catCasual,
+      "Fine dining": l10n.catFineDining,
+      "Cafe": l10n.catCafe,
+      "Buffet": l10n.catBuffet,
+    };
+    final List<String> categoriesList = categoryNames.keys.toList();
 
     return Scaffold(
-      drawer: const CustomDrawer(),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ReservationScreen()),
-          );
-        },
-        label: const Text("Book a Table"),
-        icon: const Icon(Icons.table_restaurant),
-        backgroundColor: theme.primaryColor,
-        foregroundColor: theme.colorScheme.onPrimary,
+      bottomNavigationBar: const CustomBottomNavBar(),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          FloatingActionButton.extended(
+            heroTag: "ai_assistant_fab",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AIAssistantScreen()),
+              );
+            },
+            label: Text(l10n.aiAssistant),
+            icon: const Icon(Icons.auto_awesome_rounded),
+            backgroundColor: theme.colorScheme.secondary,
+            foregroundColor: theme.colorScheme.onSecondary,
+            elevation: 4,
+          ),
+          const SizedBox(height: 16),
+          FloatingActionButton.extended(
+            heroTag: "book_table_fab",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ReservationScreen()),
+              );
+            },
+            label: Text(l10n.bookTable),
+            icon: const Icon(Icons.table_restaurant),
+            backgroundColor: theme.primaryColor,
+            foregroundColor: theme.colorScheme.onPrimary,
+          ),
+        ],
       ),
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
+      body: StreamBuilder<List<DishModel>>(
+        stream: FirestoreService().getMenuStream(),
+        builder: (context, snapshot) {
+          final allDishes = snapshot.hasData && snapshot.data!.isNotEmpty 
+              ? snapshot.data! 
+              : DishModel.mockDishes;
+
+          final displayedDishes = _selectedCategory == "All"
+              ? allDishes
+              : allDishes.where((d) => d.category == _selectedCategory).toList();
+
+          List<DishModel> popularDishes = List.from(displayedDishes)
+              ..sort((a, b) => b.orderCount.compareTo(a.orderCount));
+          
+          if (popularDishes.where((d) => d.orderCount > 0).isEmpty) {
+            popularDishes = displayedDishes.where((d) => d.rating >= 4.8).toList();
+          } else {
+            popularDishes = popularDishes.take(10).toList();
+          }
+
+          final newDishes = displayedDishes.where((d) => d.rating < 4.8).toList();
+
+          return SafeArea(
+            child: CustomScrollView(
+              slivers: [
             // Header & Search
             SliverToBoxAdapter(
               child: Padding(
@@ -80,12 +127,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             CircleAvatar(
                               radius: 24,
-                              backgroundImage: const NetworkImage(
-                                "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
-                              ), // Placeholder
-                              onBackgroundImageError: (_, _) {},
-                              child: user?.name == null
-                                  ? const Icon(Icons.person)
+                              backgroundColor: theme.colorScheme.surface,
+                              backgroundImage: user?.imageUrl != null && user!.imageUrl!.isNotEmpty 
+                                  ? NetworkImage(user!.imageUrl!) 
+                                  : null,
+                              onBackgroundImageError: user?.imageUrl != null && user!.imageUrl!.isNotEmpty ? (_, __) {} : null,
+                              child: user?.imageUrl == null || user!.imageUrl!.isEmpty
+                                  ? Text(
+                                      (user?.name.isNotEmpty == true) ? user!.name.substring(0, 1).toUpperCase() : 'G',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w900,
+                                        color: theme.colorScheme.primary,
+                                      ),
+                                    )
                                   : null,
                             ),
                             const SizedBox(width: 12),
@@ -93,13 +148,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Hey, ${user?.name.split(' ').first ?? 'Guest'}",
+                                  l10n.greeting(user?.name.split(' ').first ?? 'Guest'),
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 Text(
-                                  "Hungry?",
+                                  l10n.hungry,
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: theme.colorScheme.onSurface
                                         .withOpacity(0.6),
@@ -123,13 +178,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: const Icon(Icons.notifications_none),
                               color: theme.colorScheme.onSurface,
                             ),
-                            Builder(
-                              builder: (context) => IconButton(
-                                icon: const Icon(Icons.menu),
-                                onPressed: () =>
-                                    Scaffold.of(context).openDrawer(),
-                              ),
-                            ),
+                            // Builder(
+                            //   builder: (context) => IconButton(
+                            //     icon: const Icon(Icons.menu),
+                            //     onPressed: () =>
+                            //         Scaffold.of(context).openDrawer(),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ],
@@ -174,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Expanded(
                                   child: TextField(
                                     decoration: InputDecoration(
-                                      hintText: "Search dishes...",
+                                      hintText: l10n.searchDishes,
                                       hintStyle: TextStyle(
                                         color: theme.colorScheme.onSurface
                                             .withOpacity(0.5),
@@ -219,19 +274,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(bottom: 24.0),
                 child: colWithHeader(
                   context,
-                  title: "Browse by category",
+                  title: l10n.browseByCategory,
+                  l10n: l10n,
                   child: SizedBox(
                     height: 48, // Increased height for chips
                     child: ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       scrollDirection: Axis.horizontal,
-                      itemCount: categories.length,
+                      itemCount: categoriesList.length,
                       separatorBuilder: (_, _) => const SizedBox(width: 10),
                       itemBuilder: (context, index) {
-                        final category = categories[index];
+                        final category = categoriesList[index];
+                        final displayName = categoryNames[category] ?? category;
                         final isSelected = _selectedCategory == category;
                         return ChoiceChip(
-                          label: Text(category),
+                          label: Text(displayName),
                           selected: isSelected,
                           onSelected: (selected) {
                             setState(() {
@@ -271,13 +328,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(bottom: 24.0),
                 child: colWithHeader(
                   context,
-                  title: "Popular Dishes",
+                  title: l10n.popularDishes,
+                  l10n: l10n,
                   child: SizedBox(
                     height: 240, // Height for card + shadow
                     child: popularDishes.isEmpty
                         ? Center(
                             child: Text(
-                              "No popular dishes found",
+                              l10n.noPopularDishes,
                               style: theme.textTheme.bodyMedium,
                             ),
                           )
@@ -303,13 +361,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(bottom: 24.0),
                 child: colWithHeader(
                   context,
-                  title: "Try Something New",
+                  title: l10n.trySomethingNew,
+                  l10n: l10n,
                   child: SizedBox(
                     height: 240,
                     child: newDishes.isEmpty
                         ? Center(
                             child: Text(
-                              "No other dishes found",
+                              l10n.noNewDishes,
                               style: theme.textTheme.bodyMedium,
                             ),
                           )
@@ -330,14 +389,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-      ),
-    );
+      );
+     },
+    ),
+   );
   }
 
   Widget colWithHeader(
     BuildContext context, {
     required String title,
     required Widget child,
+    required AppLocalizations l10n,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -354,7 +416,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
-                "See more",
+                l10n.seeMore,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: Colors.grey),

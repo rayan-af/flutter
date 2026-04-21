@@ -26,6 +26,32 @@ class TableModel {
     this.status = TableStatus.available,
   });
 
+  TableModel copyWith({
+    int? id,
+    String? label,
+    double? x,
+    double? y,
+    double? width,
+    double? height,
+    TableShape? shape,
+    int? seats,
+    int? floor,
+    TableStatus? status,
+  }) {
+    return TableModel(
+      id: id ?? this.id,
+      label: label ?? this.label,
+      x: x ?? this.x,
+      y: y ?? this.y,
+      width: width ?? this.width,
+      height: height ?? this.height,
+      shape: shape ?? this.shape,
+      seats: seats ?? this.seats,
+      floor: floor ?? this.floor,
+      status: status ?? this.status,
+    );
+  }
+
   // Mock Data
   static List<TableModel> get mockTables => [
     // Ground Floor (0)

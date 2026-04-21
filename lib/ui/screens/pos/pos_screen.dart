@@ -6,6 +6,7 @@ import '../../../core/providers/inventory_provider.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../../core/services/firestore_service.dart';
 import '../../widgets/custom_drawer.dart';
+import '../../widgets/custom_bottom_nav.dart';
 
 class POSScreen extends StatefulWidget {
   const POSScreen({super.key});
@@ -58,7 +59,7 @@ class _POSScreenState extends State<POSScreen> {
               label: const Text('Add Menu Item'),
             )
           : null,
-      drawer: const CustomDrawer(),
+      // drawer: const CustomDrawer(),
       body: Row(
         children: [
           // Menu Grid Section
@@ -255,6 +256,7 @@ class _POSScreenState extends State<POSScreen> {
             ),
         ],
       ),
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 

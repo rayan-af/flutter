@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../core/providers/inventory_provider.dart';
 import '../../../core/models/inventory_model.dart';
 import '../../widgets/custom_drawer.dart';
+import '../../widgets/custom_bottom_nav.dart';
 import '../../../core/services/firestore_service.dart';
 
 class InventoryScreen extends StatefulWidget {
@@ -45,7 +46,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
         centerTitle: false,
         elevation: 0,
       ),
-      drawer: const CustomDrawer(),
+      // drawer: const CustomDrawer(),
       backgroundColor: isDark ? const Color(0xFF1E1E2C) : const Color(0xFFF5F6FA),
       floatingActionButton: (!widget.isReadOnly && _isAdmin)
           ? FloatingActionButton.extended(
@@ -190,6 +191,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
       );
     },
   ),
+  bottomNavigationBar: const CustomBottomNavBar(),
 );
   }
 

@@ -5,6 +5,7 @@ import '../../../core/services/firestore_service.dart';
 import '../../../core/providers/inventory_provider.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../widgets/custom_drawer.dart';
+import '../../widgets/custom_bottom_nav.dart';
 
 class WasteLogScreen extends StatefulWidget {
   const WasteLogScreen({super.key});
@@ -33,7 +34,7 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
       appBar: AppBar(
         title: const Text('Waste Log'),
       ),
-      drawer: const CustomDrawer(),
+      // drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Row(
@@ -188,6 +189,7 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 

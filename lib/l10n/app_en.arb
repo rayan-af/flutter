@@ -1,0 +1,146 @@
+{
+  "profileTitle": "Edit Profile",
+  "nameLabel": "Name",
+  "nameHint": "Your name",
+  "nameError": "Please enter a name",
+  "profileImageLabel": "Profile Image URL",
+  "profileImageHint": "https://...",
+  "saveChanges": "Save Changes",
+  "profileUpdated": "Profile updated successfully!",
+  "profileUpdateFailed": "Failed to update profile.",
+  "themeSettings": "Theme Settings",
+  "languageSettings": "Language Settings",
+  "lightTheme": "Light",
+  "darkTheme": "Dark",
+  "language": "Language",
+  "theme": "Theme",
+  "settingsTitle": "Settings",
+  
+  "navHome": "Home",
+  "navDashboard": "Dashboard",
+  "navPOS": "POS Terminal",
+  "navInventory": "Inventory",
+  "navCosting": "Recipe Costing",
+  "navWaste": "Waste Log",
+  "navAI": "AI Chat Assistant",
+  "navTableMap": "Table Mapping",
+  "navChefOrders": "Chef Orders",
+  "navDrinks": "Drinks",
+  "navMenu": "Menu",
+  "navLogin": "Login",
+  "navLogout": "Logout",
+  "navProfile": "Profile",
+  "navSearch": "Search",
+  "navOrders": "Orders",
+  "navSchedule": "Schedule",
+  
+  "greeting": "Hey, {name}",
+  "@greeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hungry": "Hungry?",
+  "searchDishes": "Search dishes...",
+  "browseByCategory": "Browse by category",
+  "popularDishes": "Popular Dishes",
+  "trySomethingNew": "Try Something New",
+  "seeMore": "See more",
+  "noPopularDishes": "No popular dishes found",
+  "noNewDishes": "No other dishes found",
+  
+  "loginTitle": "RestoManager",
+  "loginSubtitle": "Login to your account to continue",
+  "emailLabel": "Email *",
+  "emailHint": "Email@email.com",
+  "passwordLabel": "Password *",
+  "passwordHint": "************",
+  "loginButton": "Login",
+  "signupButton": "Sign up",
+  "dontHaveAccount": "Don't have an account?",
+  "alreadyHaveAccount": "Already have an account?",
+  "continueAsGuest": "Continue as Guest",
+  "emailError": "Please enter your email",
+  "passwordError": "Please enter your password",
+  "invalidCredentials": "Invalid email or password",
+  "registrationFailedError": "Registration failed. Email might already be in use.",
+  "signupTitle": "Join Us",
+  "signupSubtitle": "Create an account to get started",
+  "fullNameLabel": "Full Name *",
+  "fullNameHint": "John Doe",
+  "fullNameError": "Please enter your name",
+  "emailInvalidError": "Please enter a valid email",
+  "navCreateAccount": "Create Account",
+  
+  "preferences": "PREFERENCES",
+  "aiAssistant": "AI Assistant",
+  "bookTable": "Book a Table",
+  
+  "catAll": "All",
+  "catFastFood": "Fast food",
+  "catCasual": "Casual",
+  "catFineDining": "Fine dining",
+  "catCafe": "Cafe",
+  "catBuffet": "Buffet",
+  
+  "menuTitle": "Our Menu",
+  "addedToCart": "{name} added to cart",
+  "@addedToCart": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "catAppetizers": "Appetizers",
+  "catEntrees": "Entrees",
+  "catFajitas": "Fajitas",
+  "catRibs": "Ribs",
+  "catBurgers": "Burgers",
+  "catSandwiches": "Sandwiches",
+  "catSalads": "Salads",
+  "catSides": "Sides",
+  "catDesserts": "Desserts",
+  "catKidsMenu": "Kids Menu",
+  "catDrinks": "Drinks",
+  
+  "drinksFoodTitle": "Drinks & Food",
+  "tabDrinks": "Drinks",
+  "tabFood": "Food",
+  "noItemsAvailable": "No {type} available",
+  "dashTitle": "Intelligence Dashboard",
+  "keyMetrics": "KEY METRICS",
+  "quickActions": "QUICK ACTIONS",
+  "liveActivity": "LIVE ACTIVITY FEED",
+  "lowStockAlert": "CRITICAL: LOW STOCK",
+  "lowStockCount": "{count} items have dropped below their minimum threshold.",
+  "resolve": "Resolve",
+  "resetPopDishes": "Reset Popular Dishes",
+  "resetPopDishesSub": "Clear all POS order statistics and reset popular dishes to default logic.",
+  "reset": "Reset",
+  "resetPopDishesSuccess": "Popular dishes statistics have been reset.",
+  "dailySales": "Daily Sales",
+  "activeOrders": "Active Orders",
+  "wasteLoss": "Waste Loss (7d)",
+  "invHealth": "Inventory Health",
+  "noActivity": "No recent activity recorded.",
+  "newOrderActivity": "New Order Created",
+  "wasteLoggedActivity": "Waste Logged",
+  "lost": "Lost",
+  "qty": "Qty",
+  "reason": "Reason",
+  
+  "aiAssistantTitle": "AI Cafe Assistant",
+  "aiAssistantHint": "Ask about the menu or reservations...",
+  "aiAssistantError": "Sorry, I'm having trouble connecting right now. 😔",
+  
+  "@noItemsAvailable": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  }
+}

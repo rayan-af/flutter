@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:provider/provider.dart';
 import '../../core/models/dish_model.dart';
-import '../widgets/custom_drawer.dart';
+import '../../core/providers/cart_provider.dart';
+import '../widgets/custom_bottom_nav.dart';
 import 'dish_detail_screen.dart';
+import 'features/cart_screen.dart';
+import '../../l10n/app_localizations.dart';
+
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
     // Group dishes by category
     final Map<String, List<DishModel>> categorizedDishes = {};
     for (var dish in DishModel.mockDishes) {
@@ -18,6 +22,21 @@ class MenuScreen extends StatelessWidget {
       }
       categorizedDishes[dish.category]!.add(dish);
     }
+
+    // Category display name mapping
+    final Map<String, String> categoryNames = {
+      'Appetizers': l10n.catAppetizers,
+      'Entrees': l10n.catEntrees,
+      'Fajitas': l10n.catFajitas,
+      'Ribs': l10n.catRibs,
+      'Burgers': l10n.catBurgers,
+      'Sandwiches': l10n.catSandwiches,
+      'Salads': l10n.catSalads,
+      'Sides': l10n.catSides,
+      'Desserts': l10n.catDesserts,
+      'Kids Menu': l10n.catKidsMenu,
+      'Drinks': l10n.catDrinks,
+    };
 
     // Sort categories primarily found in mock data
     final sortedCategories = [
@@ -45,11 +64,47 @@ class MenuScreen extends StatelessWidget {
     return DefaultTabController(
       length: displayCategories.length,
       child: Scaffold(
-        drawer: const CustomDrawer(),
+        // drawer: const CustomDrawer(),
         appBar: AppBar(
-          title: const Text("Our Menu"),
+          title: Text(l10n.menuTitle),
           backgroundColor: theme.appBarTheme.backgroundColor,
           foregroundColor: theme.appBarTheme.foregroundColor,
+          actions: [
+            Consumer<CartProvider>(
+              builder: (context, cart, child) {
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.shopping_cart_outlined),
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => const CartScreen()));
+                      },
+                    ),
+                    if (cart.totalItems > 0)
+                      Positioned(
+                        right: 8,
+                        top: 8,
+                        child: Container(
+                          padding: const EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                          child: Text(
+                            '\${cart.totalItems}',
+                            style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(width: 8),
+          ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(64),
             child: Container(
@@ -71,7 +126,7 @@ class MenuScreen extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
-                              category,
+                              categoryNames[category] ?? category,
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -97,6 +152,7 @@ class MenuScreen extends StatelessWidget {
             );
           }).toList(),
         ),
+        bottomNavigationBar: const CustomBottomNavBar(),
       ),
     );
   }
@@ -230,16 +286,27 @@ class _DishItemCardState extends State<_DishItemCard> {
                             ],
                           ),
                           // Add Button
-                          Container(
-                            decoration: BoxDecoration(
-                              color: theme.primaryColor,
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            padding: const EdgeInsets.all(8),
-                            child: Icon(
-                              Icons.add_rounded,
-                              size: 20,
-                              color: theme.colorScheme.onPrimary,
+                          GestureDetector(
+                            onTap: () {
+                              Provider.of<CartProvider>(context, listen: false).addItem(widget.dish);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(AppLocalizations.of(context)!.addedToCart(widget.dish.name)),
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: theme.primaryColor,
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              padding: const EdgeInsets.all(8),
+                              child: Icon(
+                                Icons.add_rounded,
+                                size: 20,
+                                color: theme.colorScheme.onPrimary,
+                              ),
                             ),
                           ),
                         ],

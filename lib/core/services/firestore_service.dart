@@ -184,7 +184,28 @@ class FirestoreService {
         'status': 'pending',
         'timestamp': FieldValue.serverTimestamp(),
       });
+
+      // 4. Update Popular Dishes stats
+      Map<String, int> dishCounts = {};
+      for (var dish in items) {
+        dishCounts[dish.id] = (dishCounts[dish.id] ?? 0) + 1;
+      }
+      for (var entry in dishCounts.entries) {
+        final recipeRef = _recipes.doc(entry.key);
+        transaction.update(recipeRef, {
+          'orderCount': FieldValue.increment(entry.value)
+        });
+      }
     });
+  }
+
+  Future<void> resetPopularDishesStats() async {
+    final snapshot = await _recipes.get();
+    final batch = _db.batch();
+    for (var doc in snapshot.docs) {
+      batch.update(doc.reference, {'orderCount': 0});
+    }
+    await batch.commit();
   }
 
   // Seeding (One-time)

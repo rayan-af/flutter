@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../widgets/custom_drawer.dart';
+import '../../widgets/custom_bottom_nav.dart';
 import '../../../core/providers/inventory_provider.dart';
 import '../../../core/models/dish_model.dart';
 import '../../../core/models/inventory_model.dart';
@@ -119,7 +120,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
       appBar: AppBar(
         title: const Text('Recipe Costing'),
       ),
-      drawer: const CustomDrawer(),
+      // drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
         child: Column(
@@ -309,6 +310,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }

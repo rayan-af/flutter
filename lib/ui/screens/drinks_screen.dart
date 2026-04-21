@@ -1,20 +1,21 @@
-import 'package:flutter/material.dart';
 import '../../core/constants/menu_data.dart';
+import '../../l10n/app_localizations.dart';
 
 class DrinksScreen extends StatelessWidget {
   const DrinksScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Drinks & Food'),
-          bottom: const TabBar(
+          title: Text(l10n.drinksFoodTitle),
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Drinks', icon: Icon(Icons.local_drink)),
-              Tab(text: 'Food', icon: Icon(Icons.restaurant)),
+              Tab(text: l10n.tabDrinks, icon: const Icon(Icons.local_drink)),
+              Tab(text: l10n.tabFood, icon: const Icon(Icons.restaurant)),
             ],
           ),
         ),
@@ -48,8 +49,10 @@ class _CategoryList extends StatelessWidget {
     });
 
     if (items.isEmpty) {
+      final l10n = AppLocalizations.of(context)!;
+      final displayType = type == 'Drinks' ? l10n.tabDrinks : l10n.tabFood;
       return Center(
-        child: Text('No $type available'),
+        child: Text(l10n.noItemsAvailable(displayType)),
       );
     }
 

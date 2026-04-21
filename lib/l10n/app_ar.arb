@@ -65,6 +65,8 @@
   "noActivity": "لم يتم تسجيل أي نشاط حديث.",
   "newOrderActivity": "تم إنشاء طلب جديد",
   "wasteLoggedActivity": "تم تسجيل هدر",
+  "total": "الإجمالي",
+  "status": "الحالة",
   "lost": "فقدت",
   "qty": "الكمية",
   "reason": "السبب",

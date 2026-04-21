@@ -114,6 +114,8 @@
   "noActivity": "Aucune activité récente enregistrée.",
   "newOrderActivity": "Nouvelle commande créée",
   "wasteLoggedActivity": "Déchet enregistré",
+  "total": "Total",
+  "status": "Statut",
   "lost": "Perdu",
   "qty": "Qté",
   "reason": "Raison",

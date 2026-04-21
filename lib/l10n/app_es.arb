@@ -114,6 +114,8 @@
   "noActivity": "No se registró actividad reciente.",
   "newOrderActivity": "Nuevo pedido creado",
   "wasteLoggedActivity": "Desperdicio registrado",
+  "total": "Total",
+  "status": "Estado",
   "lost": "Perdido",
   "qty": "Cant",
   "reason": "Razón",

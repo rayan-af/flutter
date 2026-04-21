@@ -128,6 +128,8 @@
   "noActivity": "No recent activity recorded.",
   "newOrderActivity": "New Order Created",
   "wasteLoggedActivity": "Waste Logged",
+  "total": "Total",
+  "status": "Status",
   "lost": "Lost",
   "qty": "Qty",
   "reason": "Reason",

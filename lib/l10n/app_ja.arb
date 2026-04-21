@@ -114,6 +114,8 @@
   "noActivity": "最近のアクティビティはありません。",
   "newOrderActivity": "新しい注文が作成されました",
   "wasteLoggedActivity": "廃棄が記録されました",
+  "total": "合計",
+  "status": "ステータス",
   "lost": "損失",
   "qty": "数量",
   "reason": "理由",

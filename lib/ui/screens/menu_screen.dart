@@ -12,6 +12,9 @@ import '../../l10n/app_localizations.dart';
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
     // Group dishes by category

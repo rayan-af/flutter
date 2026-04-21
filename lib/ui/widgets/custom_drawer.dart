@@ -29,6 +29,7 @@ class CustomDrawer extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final user = authProvider.currentUser;
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     // Get current route name to highlight active tab (simple check)
     final String currentRoute = ModalRoute.of(context)?.settings.name ?? '';

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../core/models/order_model.dart';
-import '../../widgets/custom_bottom_nav.dart';
 import 'package:intl/intl.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../widgets/custom_bottom_nav.dart';
 
 class ChefOrdersScreen extends StatefulWidget {
   const ChefOrdersScreen({super.key});
@@ -27,11 +28,12 @@ class _ChefOrdersScreenState extends State<ChefOrdersScreen> {
     });
   }
 
-  String _getTimeAgo(DateTime timestamp) {
+  String _getTimeAgo(BuildContext context, DateTime timestamp) {
     final difference = DateTime.now().difference(timestamp);
-    if (difference.inMinutes == 0) return "Just now";
-    if (difference.inHours > 0) return "\${difference.inHours}h \${difference.inMinutes % 60}m ago";
-    return "\${difference.inMinutes} mins ago";
+    final l10n = AppLocalizations.of(context)!;
+    if (difference.inMinutes == 0) return l10n.justNow;
+    if (difference.inHours > 0) return l10n.hoursMinsAgo(difference.inHours, difference.inMinutes % 60);
+    return l10n.minsAgo(difference.inMinutes);
   }
 
   @override
@@ -40,7 +42,7 @@ class _ChefOrdersScreenState extends State<ChefOrdersScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Incoming Orders"),
+        title: Text(AppLocalizations.of(context)!.chefOrdersTitle),
       ),
       bottomNavigationBar: const CustomBottomNavBar(),
       body: StreamBuilder<QuerySnapshot>(
@@ -50,8 +52,9 @@ class _ChefOrdersScreenState extends State<ChefOrdersScreen> {
             .orderBy('createdAt', descending: false) // Oldest first
             .snapshots(),
         builder: (context, snapshot) {
+          final l10n = AppLocalizations.of(context)!;
           if (snapshot.hasError) {
-            return Center(child: Text('Error: \${snapshot.error}'));
+            return Center(child: Text(l10n.errorMsg(snapshot.error.toString())));
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -66,7 +69,7 @@ class _ChefOrdersScreenState extends State<ChefOrdersScreen> {
                 children: [
                   Icon(Icons.check_circle_outline, size: 80, color: theme.colorScheme.primary.withValues(alpha: 0.5)),
                   const SizedBox(height: 16),
-                  Text("All caught up!", style: theme.textTheme.headlineSmall),
+                  Text(AppLocalizations.of(context)!.noActivity, style: theme.textTheme.headlineSmall),
                 ],
               ),
             );
@@ -90,7 +93,7 @@ class _ChefOrdersScreenState extends State<ChefOrdersScreen> {
                 child: StreamBuilder(
                   stream: _timerStream,
                   builder: (context, _) {
-                    final timeAgo = _getTimeAgo(order.createdAt);
+                    final timeAgo = _getTimeAgo(context, order.createdAt);
                     final isUrgent = DateTime.now().difference(order.createdAt).inMinutes > 15;
 
                     return Card(
@@ -111,7 +114,7 @@ class _ChefOrdersScreenState extends State<ChefOrdersScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "#\${order.id.substring(order.id.length - 4)}",
+                                  "#\${order.id.length >= 4 ? order.id.substring(order.id.length - 4) : order.id}",
                                   style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 Container(
@@ -162,7 +165,7 @@ class _ChefOrdersScreenState extends State<ChefOrdersScreen> {
                             const SizedBox(height: 8),
                             Center(
                               child: Text(
-                                "Double-tap to mark done",
+                                AppLocalizations.of(context)!.markCompleted,
                                 style: TextStyle(color: theme.colorScheme.onSurface.withValues(alpha: 0.4), fontSize: 11),
                               ),
                             ),

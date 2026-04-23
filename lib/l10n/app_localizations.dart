@@ -200,6 +200,42 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settingsTitle;
 
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get unit;
+
   /// No description provided for @navHome.
   ///
   /// In en, this message translates to:
@@ -299,7 +335,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSchedule.
   ///
   /// In en, this message translates to:
-  /// **'Schedule'**
+  /// **'Work Time'**
   String get navSchedule;
 
   /// No description provided for @greeting.
@@ -752,6 +788,18 @@ abstract class AppLocalizations {
   /// **'Waste Logged'**
   String get wasteLoggedActivity;
 
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get total;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
   /// No description provided for @lost.
   ///
   /// In en, this message translates to:
@@ -787,6 +835,486 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sorry, I\'m having trouble connecting right now. 😔'**
   String get aiAssistantError;
+
+  /// No description provided for @recipeCostingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe Costing'**
+  String get recipeCostingTitle;
+
+  /// No description provided for @selectTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Template'**
+  String get selectTemplate;
+
+  /// No description provided for @selectMenuItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Menu Item (Optional)'**
+  String get selectMenuItem;
+
+  /// No description provided for @plateInputs.
+  ///
+  /// In en, this message translates to:
+  /// **'Plate Inputs'**
+  String get plateInputs;
+
+  /// No description provided for @plateCostLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Plate Cost (\$)'**
+  String get plateCostLabel;
+
+  /// No description provided for @plateCostHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-calculated from recipe or manual.'**
+  String get plateCostHelper;
+
+  /// No description provided for @targetPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Sales Price (\$)'**
+  String get targetPriceLabel;
+
+  /// No description provided for @targetPriceHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu price for the customer.'**
+  String get targetPriceHelper;
+
+  /// No description provided for @grossProfitMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'GROSS PROFIT MARGIN'**
+  String get grossProfitMargin;
+
+  /// No description provided for @profitPerPlate.
+  ///
+  /// In en, this message translates to:
+  /// **'Profit per Plate'**
+  String get profitPerPlate;
+
+  /// No description provided for @missingIngredientsWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: Some ingredients not found in inventory. Cost may be inaccurate.'**
+  String get missingIngredientsWarning;
+
+  /// No description provided for @tableMappingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Table Mapping'**
+  String get tableMappingTitle;
+
+  /// No description provided for @chefOrdersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chef Orders'**
+  String get chefOrdersTitle;
+
+  /// No description provided for @inventoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get inventoryTitle;
+
+  /// No description provided for @posTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'POS Terminal'**
+  String get posTitle;
+
+  /// No description provided for @wasteLogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Waste Log'**
+  String get wasteLogTitle;
+
+  /// No description provided for @cartEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart Empty'**
+  String get cartEmpty;
+
+  /// No description provided for @itemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get itemsCount;
+
+  /// No description provided for @addMenuItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Menu Item'**
+  String get addMenuItem;
+
+  /// No description provided for @noItemsInMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'No items in menu. Try seeding data.'**
+  String get noItemsInMenu;
+
+  /// No description provided for @addToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to Cart'**
+  String get addToCart;
+
+  /// No description provided for @sessionLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Log'**
+  String get sessionLog;
+
+  /// No description provided for @confirmOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Order'**
+  String get confirmOrder;
+
+  /// No description provided for @clearCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Cart'**
+  String get clearCart;
+
+  /// No description provided for @orderConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Confirmed Successfully!'**
+  String get orderConfirmed;
+
+  /// No description provided for @quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get quantity;
+
+  /// No description provided for @scheduleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Work Time'**
+  String get scheduleTitle;
+
+  /// No description provided for @inventoryListing.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory Listing'**
+  String get inventoryListing;
+
+  /// No description provided for @inventoryManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory Management'**
+  String get inventoryManagement;
+
+  /// No description provided for @newItem.
+  ///
+  /// In en, this message translates to:
+  /// **'New Item'**
+  String get newItem;
+
+  /// No description provided for @itemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Name'**
+  String get itemName;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @priceCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Price (Cost)'**
+  String get priceCost;
+
+  /// No description provided for @quickQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Quantity'**
+  String get quickQuantity;
+
+  /// No description provided for @actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actions;
+
+  /// No description provided for @lowStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Stock'**
+  String get lowStock;
+
+  /// No description provided for @inStock.
+  ///
+  /// In en, this message translates to:
+  /// **'In Stock'**
+  String get inStock;
+
+  /// No description provided for @confirmDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete'**
+  String get confirmDelete;
+
+  /// No description provided for @removeInventoryItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name} from inventory?'**
+  String removeInventoryItem(Object name);
+
+  /// No description provided for @updateItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Update {name}'**
+  String updateItem(Object name);
+
+  /// No description provided for @addQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Quantity'**
+  String get addQuantity;
+
+  /// No description provided for @addInventoryItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Inventory Item'**
+  String get addInventoryItem;
+
+  /// No description provided for @costPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost / Price'**
+  String get costPrice;
+
+  /// No description provided for @addItemSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Item added to Inventory!'**
+  String get addItemSuccess;
+
+  /// No description provided for @liquid.
+  ///
+  /// In en, this message translates to:
+  /// **'Liquid'**
+  String get liquid;
+
+  /// No description provided for @solid.
+  ///
+  /// In en, this message translates to:
+  /// **'Solid'**
+  String get solid;
+
+  /// No description provided for @groundFloor.
+  ///
+  /// In en, this message translates to:
+  /// **'Ground Floor'**
+  String get groundFloor;
+
+  /// No description provided for @firstFloor.
+  ///
+  /// In en, this message translates to:
+  /// **'1st Floor'**
+  String get firstFloor;
+
+  /// No description provided for @secondFloor.
+  ///
+  /// In en, this message translates to:
+  /// **'2nd Floor'**
+  String get secondFloor;
+
+  /// No description provided for @rooftop.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooftop'**
+  String get rooftop;
+
+  /// No description provided for @seats.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Seats'**
+  String seats(int count);
+
+  /// No description provided for @seatWalkIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Seat Walk-In Customer'**
+  String get seatWalkIn;
+
+  /// No description provided for @markReserved.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as Reserved'**
+  String get markReserved;
+
+  /// No description provided for @clearTableAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Table (Available)'**
+  String get clearTableAvailable;
+
+  /// No description provided for @occupied.
+  ///
+  /// In en, this message translates to:
+  /// **'Occupied'**
+  String get occupied;
+
+  /// No description provided for @available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get available;
+
+  /// No description provided for @reserved.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved'**
+  String get reserved;
+
+  /// No description provided for @logSpoilage.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Spoilage / Waste'**
+  String get logSpoilage;
+
+  /// No description provided for @quantityWasted.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity Wasted'**
+  String get quantityWasted;
+
+  /// No description provided for @expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get expired;
+
+  /// No description provided for @spilled.
+  ///
+  /// In en, this message translates to:
+  /// **'Spilled'**
+  String get spilled;
+
+  /// No description provided for @badQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Bad Quality'**
+  String get badQuality;
+
+  /// No description provided for @mistake.
+  ///
+  /// In en, this message translates to:
+  /// **'Mistake'**
+  String get mistake;
+
+  /// No description provided for @logWaste.
+  ///
+  /// In en, this message translates to:
+  /// **'LOG WASTE'**
+  String get logWaste;
+
+  /// No description provided for @recentWasteLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Waste Logs'**
+  String get recentWasteLogs;
+
+  /// No description provided for @noWasteLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'No waste logs recorded.'**
+  String get noWasteLogs;
+
+  /// No description provided for @wasteLoggedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Waste Logged Successfully'**
+  String get wasteLoggedSuccess;
+
+  /// No description provided for @selectItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an item'**
+  String get selectItem;
+
+  /// No description provided for @selectReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a reason'**
+  String get selectReason;
+
+  /// No description provided for @enterQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter quantity'**
+  String get enterQuantity;
+
+  /// No description provided for @invalidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid number'**
+  String get invalidNumber;
+
+  /// No description provided for @item.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get item;
+
+  /// No description provided for @markCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Double-tap to mark done'**
+  String get markCompleted;
+
+  /// No description provided for @totalWeeklyHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Weekly Hours'**
+  String get totalWeeklyHours;
+
+  /// No description provided for @upcomingShifts.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Shifts'**
+  String get upcomingShifts;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'TODAY'**
+  String get today;
+
+  /// No description provided for @justNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get justNow;
+
+  /// No description provided for @minsAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{mins} mins ago'**
+  String minsAgo(int mins);
+
+  /// No description provided for @hoursMinsAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {mins}m ago'**
+  String hoursMinsAgo(int hours, int mins);
+
+  /// No description provided for @errorMsg.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String errorMsg(String error);
 }
 
 class _AppLocalizationsDelegate

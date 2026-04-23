@@ -5,6 +5,7 @@ import '../../../core/models/inventory_model.dart';
 import '../../widgets/custom_drawer.dart';
 import '../../widgets/custom_bottom_nav.dart';
 import '../../../core/services/firestore_service.dart';
+import '../../../l10n/app_localizations.dart';
 
 class InventoryScreen extends StatefulWidget {
   final bool isReadOnly;
@@ -38,10 +39,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
     final inventoryProvider = Provider.of<InventoryProvider>(context);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isReadOnly ? 'Inventory Listing' : 'Inventory Management'),
+        title: Text(widget.isReadOnly ? l10n.inventoryListing : l10n.inventoryManagement),
         backgroundColor: isDark ? const Color(0xFF1E1E2C) : Colors.white,
         centerTitle: false,
         elevation: 0,
@@ -54,7 +56,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
               backgroundColor: const Color(0xFF00C853),
               foregroundColor: Colors.white,
               icon: const Icon(Icons.add),
-              label: const Text('New Item'),
+              label: Text(l10n.newItem),
             )
           : null,
       body: StreamBuilder<List<InventoryModel>>(
@@ -79,13 +81,13 @@ class _InventoryScreenState extends State<InventoryScreen> {
             constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width - 32),
             child: DataTable(
               headingRowColor: MaterialStateProperty.all(isDark ? const Color(0xFF2D2D3F) : Colors.grey[100]),
-              columns: const [
-                DataColumn(label: Text('Item Name', style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(label: Text('Category', style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(label: Text('Status', style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(label: Text('Price (Cost)', style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(label: Text('Quick Quantity', style: TextStyle(fontWeight: FontWeight.bold))),
-                DataColumn(label: Text('Actions', style: TextStyle(fontWeight: FontWeight.bold))),
+              columns: [
+                DataColumn(label: Text(l10n.itemName, style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(label: Text(l10n.category, style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(label: Text(l10n.status, style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(label: Text(l10n.priceCost, style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(label: Text(l10n.quickQuantity, style: const TextStyle(fontWeight: FontWeight.bold))),
+                DataColumn(label: Text(l10n.actions, style: const TextStyle(fontWeight: FontWeight.bold))),
               ],
               rows: items.map((item) {
                 return DataRow(cells: [
@@ -109,7 +111,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                             color: Colors.grey.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12)
                         ),
-                        child: Text(item.unit == 'ml' ? 'Liquid' : 'Solid', style: const TextStyle(fontSize: 12))
+                        child: Text(item.unit == 'ml' ? l10n.liquid : l10n.solid, style: const TextStyle(fontSize: 12))
                     )
                   ),
                   DataCell(
@@ -120,7 +122,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
-                        item.isLowStock ? 'Low Stock' : 'In Stock',
+                        item.isLowStock ? l10n.lowStock : l10n.inStock,
                         style: TextStyle(
                           color: item.isLowStock ? Colors.red : Colors.green,
                           fontWeight: FontWeight.bold,
@@ -168,11 +170,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
                            final confirm = await showDialog<bool>(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: const Text('Confirm Delete'),
-                                content: Text('Remove ${item.name} from inventory?'),
+                                title: Text(l10n.confirmDelete),
+                                content: Text(l10n.removeInventoryItem(item.name)),
                                 actions: [
-                                  TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-                                  TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Delete', style: TextStyle(color: Colors.red))),
+                                  TextButton(onPressed: () => Navigator.pop(context, false), child: Text(l10n.cancel)),
+                                  TextButton(onPressed: () => Navigator.pop(context, true), child: Text(l10n.delete, style: const TextStyle(color: Colors.red))),
                                 ],
                               )
                            );
@@ -197,17 +199,18 @@ class _InventoryScreenState extends State<InventoryScreen> {
 
   void _showRestockDialog(BuildContext context, InventoryModel item, InventoryProvider provider) {
     final TextEditingController controller = TextEditingController();
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Update ${item.name}'),
+        title: Text(l10n.updateItem(item.name)),
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(labelText: 'Add Quantity'),
+          decoration: InputDecoration(labelText: l10n.addQuantity),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
           ElevatedButton(
             onPressed: () {
               final double? amount = double.tryParse(controller.text);
@@ -216,7 +219,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                 Navigator.pop(context);
               }
             },
-            child: const Text('Update'),
+            child: Text(l10n.update),
           ),
         ],
       ),
@@ -228,6 +231,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
     final qtyController = TextEditingController();
     final costController = TextEditingController();
     String? selectedUnit;
+    final l10n = AppLocalizations.of(context)!;
     
     showDialog(
       context: context,
@@ -242,34 +246,34 @@ class _InventoryScreenState extends State<InventoryScreen> {
                                 selectedUnit != null;
                                 
             return AlertDialog(
-              title: const Text('Add Inventory Item'),
+              title: Text(l10n.addInventoryItem),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
                       controller: nameController,
-                      decoration: const InputDecoration(labelText: 'Item Name'),
+                      decoration: InputDecoration(labelText: l10n.itemName),
                       onChanged: (_) => setState(() {}),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: qtyController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      decoration: const InputDecoration(labelText: 'Quantity'),
+                      decoration: InputDecoration(labelText: l10n.quantity),
                       onChanged: (_) => setState(() {}),
                     ),
                     const SizedBox(height: 16),
                     TextField(
                       controller: costController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      decoration: const InputDecoration(labelText: 'Cost / Price'),
+                      decoration: InputDecoration(labelText: l10n.costPrice),
                       onChanged: (_) => setState(() {}),
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String>(
                       value: selectedUnit,
-                      decoration: const InputDecoration(labelText: 'Unit'),
+                      decoration: InputDecoration(labelText: l10n.unit),
                       items: const [
                         DropdownMenuItem(value: 'kg', child: Text('kg')),
                         DropdownMenuItem(value: 'L', child: Text('L')),

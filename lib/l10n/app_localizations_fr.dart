@@ -54,7 +54,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get theme => 'Thème';
 
   @override
-  String get settingsTitle => 'Paramètres';
+  String get settingsTitle => 'Réglages';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String get delete => 'Supprimer';
+
+  @override
+  String get update => 'Modifier';
+
+  @override
+  String get confirm => 'Confirmer';
+
+  @override
+  String get unit => 'Unité';
 
   @override
   String get navHome => 'Accueil';
@@ -105,7 +123,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navOrders => 'Commandes';
 
   @override
-  String get navSchedule => 'Horaire';
+  String get navSchedule => 'Temps de travail';
 
   @override
   String greeting(String name) {
@@ -344,6 +362,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get wasteLoggedActivity => 'Déchet enregistré';
 
   @override
+  String get total => 'Total';
+
+  @override
+  String get status => 'Statut';
+
+  @override
   String get lost => 'Perdu';
 
   @override
@@ -362,4 +386,258 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get aiAssistantError =>
       'Désolé, j\'ai du mal à me connecter pour le moment. 😔';
+
+  @override
+  String get recipeCostingTitle => 'Coût des recettes';
+
+  @override
+  String get selectTemplate => 'Sélectionner un modèle';
+
+  @override
+  String get selectMenuItem => 'Sélectionner un article du menu (Optionnel)';
+
+  @override
+  String get plateInputs => 'Données de l\'assiette';
+
+  @override
+  String get plateCostLabel => 'Coût total de l\'assiette (\$)';
+
+  @override
+  String get plateCostHelper =>
+      'Calculé automatiquement à partir de la recette ou manuel.';
+
+  @override
+  String get targetPriceLabel => 'Prix de vente cible (\$)';
+
+  @override
+  String get targetPriceHelper => 'Prix du menu pour le client.';
+
+  @override
+  String get grossProfitMargin => 'MARGE BÉNÉFICIAIRE BRUTE';
+
+  @override
+  String get profitPerPlate => 'Bénéfice par assiette';
+
+  @override
+  String get missingIngredientsWarning =>
+      'Attention : Certains ingrédients n\'ont pas été trouvés dans l\'inventaire. Le coût peut être inexact.';
+
+  @override
+  String get tableMappingTitle => 'Mappage des tables';
+
+  @override
+  String get chefOrdersTitle => 'Commandes du chef';
+
+  @override
+  String get inventoryTitle => 'Inventaire';
+
+  @override
+  String get posTitle => 'Terminal POS';
+
+  @override
+  String get wasteLogTitle => 'Journal de gaspillage';
+
+  @override
+  String get cartEmpty => 'Panier vide';
+
+  @override
+  String get itemsCount => 'Articles';
+
+  @override
+  String get addMenuItem => 'Ajouter un article au menu';
+
+  @override
+  String get noItemsInMenu => 'Aucun article dans le menu.';
+
+  @override
+  String get addToCart => 'Ajouter au panier';
+
+  @override
+  String get sessionLog => 'Journal de session';
+
+  @override
+  String get confirmOrder => 'Confirmer la commande';
+
+  @override
+  String get clearCart => 'Vider le panier';
+
+  @override
+  String get orderConfirmed => 'Commande confirmée avec succès !';
+
+  @override
+  String get quantity => 'Quantité';
+
+  @override
+  String get scheduleTitle => 'Temps de travail';
+
+  @override
+  String get inventoryListing => 'Liste de l\'inventaire';
+
+  @override
+  String get inventoryManagement => 'Gestion de l\'inventaire';
+
+  @override
+  String get newItem => 'Nouvel article';
+
+  @override
+  String get itemName => 'Nom de l\'article';
+
+  @override
+  String get category => 'Catégorie';
+
+  @override
+  String get priceCost => 'Prix (Coût)';
+
+  @override
+  String get quickQuantity => 'Quantité rapide';
+
+  @override
+  String get actions => 'Actions';
+
+  @override
+  String get lowStock => 'Stock faible';
+
+  @override
+  String get inStock => 'En stock';
+
+  @override
+  String get confirmDelete => 'Confirmer la suppression';
+
+  @override
+  String removeInventoryItem(Object name) {
+    return 'Supprimer $name de l\'inventaire ?';
+  }
+
+  @override
+  String updateItem(Object name) {
+    return 'Modifier $name';
+  }
+
+  @override
+  String get addQuantity => 'Ajouter une quantité';
+
+  @override
+  String get addInventoryItem => 'Ajouter un article à l\'inventaire';
+
+  @override
+  String get costPrice => 'Coût / Prix';
+
+  @override
+  String get addItemSuccess => 'Article ajouté à l\'inventaire !';
+
+  @override
+  String get liquid => 'Liquide';
+
+  @override
+  String get solid => 'Solide';
+
+  @override
+  String get groundFloor => 'Rez-de-chaussée';
+
+  @override
+  String get firstFloor => '1er étage';
+
+  @override
+  String get secondFloor => '2ème étage';
+
+  @override
+  String get rooftop => 'Toit terrasse';
+
+  @override
+  String seats(int count) {
+    return '$count sièges';
+  }
+
+  @override
+  String get seatWalkIn => 'Installer client sans réservation';
+
+  @override
+  String get markReserved => 'Marquer comme réservé';
+
+  @override
+  String get clearTableAvailable => 'Libérer la table (Disponible)';
+
+  @override
+  String get occupied => 'Occupé';
+
+  @override
+  String get available => 'Disponible';
+
+  @override
+  String get reserved => 'Réservé';
+
+  @override
+  String get logSpoilage => 'Enregistrer une perte / gaspillage';
+
+  @override
+  String get quantityWasted => 'Quantité gaspillée';
+
+  @override
+  String get expired => 'Expiré';
+
+  @override
+  String get spilled => 'Renversé';
+
+  @override
+  String get badQuality => 'Mauvaise qualité';
+
+  @override
+  String get mistake => 'Erreur';
+
+  @override
+  String get logWaste => 'ENREGISTRER LE GASPILLAGE';
+
+  @override
+  String get recentWasteLogs => 'Registres récents';
+
+  @override
+  String get noWasteLogs => 'Aucun registre de gaspillage enregistré.';
+
+  @override
+  String get wasteLoggedSuccess => 'Gaspillage enregistré avec succès';
+
+  @override
+  String get selectItem => 'Veuillez sélectionner un article';
+
+  @override
+  String get selectReason => 'Sélectionnez une raison';
+
+  @override
+  String get enterQuantity => 'Entrez la quantité';
+
+  @override
+  String get invalidNumber => 'Nombre invalide';
+
+  @override
+  String get item => 'Article';
+
+  @override
+  String get markCompleted => 'Appuyez deux fois pour terminer';
+
+  @override
+  String get totalWeeklyHours => 'Total des heures hebdomadaires';
+
+  @override
+  String get upcomingShifts => 'Prochains quarts de travail';
+
+  @override
+  String get today => 'AUJOURD\'HUI';
+
+  @override
+  String get justNow => 'À l`instant';
+
+  @override
+  String minsAgo(int mins) {
+    return 'Il y a $mins min';
+  }
+
+  @override
+  String hoursMinsAgo(int hours, int mins) {
+    return 'Il y a ${hours}h ${mins}m';
+  }
+
+  @override
+  String errorMsg(String error) {
+    return 'Erreur : $error';
+  }
 }

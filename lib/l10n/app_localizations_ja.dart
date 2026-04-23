@@ -57,6 +57,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsTitle => '設定';
 
   @override
+  String get cancel => 'キャンセル';
+
+  @override
+  String get save => '保存';
+
+  @override
+  String get delete => '削除';
+
+  @override
+  String get update => '更新';
+
+  @override
+  String get confirm => '確認';
+
+  @override
+  String get unit => '単位';
+
+  @override
   String get navHome => 'ホーム';
 
   @override
@@ -105,7 +123,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get navOrders => '注文';
 
   @override
-  String get navSchedule => 'スケジュール';
+  String get navSchedule => '勤務時間';
 
   @override
   String greeting(String name) {
@@ -341,6 +359,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get wasteLoggedActivity => '廃棄が記録されました';
 
   @override
+  String get total => '合計';
+
+  @override
+  String get status => 'ステータス';
+
+  @override
   String get lost => '損失';
 
   @override
@@ -357,4 +381,257 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get aiAssistantError => '申し訳ありません。現在接続に問題があります。 😔';
+
+  @override
+  String get recipeCostingTitle => 'レシピ原価計算';
+
+  @override
+  String get selectTemplate => 'テンプレートを選択';
+
+  @override
+  String get selectMenuItem => 'メニュー項目を選択 (任意)';
+
+  @override
+  String get plateInputs => 'プレート入力';
+
+  @override
+  String get plateCostLabel => '合計プレート原価 (\$)';
+
+  @override
+  String get plateCostHelper => 'レシピまたは手動で自動計算されます。';
+
+  @override
+  String get targetPriceLabel => '目標販売価格 (\$)';
+
+  @override
+  String get targetPriceHelper => '顧客向けのメニュー価格。';
+
+  @override
+  String get grossProfitMargin => '粗利益率';
+
+  @override
+  String get profitPerPlate => 'プレートあたりの利益';
+
+  @override
+  String get missingIngredientsWarning =>
+      '警告：一部の材料が在庫に見つかりませんでした。原価が不正確な可能性があります。';
+
+  @override
+  String get tableMappingTitle => 'テーブルマッピング';
+
+  @override
+  String get chefOrdersTitle => 'シェフの注文';
+
+  @override
+  String get inventoryTitle => '在庫';
+
+  @override
+  String get posTitle => 'POSターミナル';
+
+  @override
+  String get wasteLogTitle => '廃棄ログ';
+
+  @override
+  String get cartEmpty => 'カートは空です';
+
+  @override
+  String get itemsCount => 'アイテム';
+
+  @override
+  String get addMenuItem => 'メニュー項目を追加';
+
+  @override
+  String get noItemsInMenu => 'メニューに項目がありません。';
+
+  @override
+  String get addToCart => 'カートに入れる';
+
+  @override
+  String get sessionLog => 'セッションログ';
+
+  @override
+  String get confirmOrder => '注文を確定する';
+
+  @override
+  String get clearCart => 'カートをクリア';
+
+  @override
+  String get orderConfirmed => '注文が確定しました！';
+
+  @override
+  String get quantity => '数量';
+
+  @override
+  String get scheduleTitle => '勤務時間';
+
+  @override
+  String get inventoryListing => '在庫一覧';
+
+  @override
+  String get inventoryManagement => '在庫管理';
+
+  @override
+  String get newItem => '新規アイテム';
+
+  @override
+  String get itemName => 'アイテム名';
+
+  @override
+  String get category => 'カテゴリー';
+
+  @override
+  String get priceCost => '価格 (原価)';
+
+  @override
+  String get quickQuantity => 'クイック数量設定';
+
+  @override
+  String get actions => '操作';
+
+  @override
+  String get lowStock => '在庫不備';
+
+  @override
+  String get inStock => '在庫あり';
+
+  @override
+  String get confirmDelete => '削除の確認';
+
+  @override
+  String removeInventoryItem(Object name) {
+    return '在庫から $name を削除しますか？';
+  }
+
+  @override
+  String updateItem(Object name) {
+    return '$name を更新';
+  }
+
+  @override
+  String get addQuantity => '数量を追加';
+
+  @override
+  String get addInventoryItem => '在庫アイテムを追加';
+
+  @override
+  String get costPrice => '原価 / 価格';
+
+  @override
+  String get addItemSuccess => 'アイテムが在庫に追加されました！';
+
+  @override
+  String get liquid => '液体';
+
+  @override
+  String get solid => '個体';
+
+  @override
+  String get groundFloor => '1階';
+
+  @override
+  String get firstFloor => '2階';
+
+  @override
+  String get secondFloor => '3階';
+
+  @override
+  String get rooftop => '屋上';
+
+  @override
+  String seats(int count) {
+    return '$count 席';
+  }
+
+  @override
+  String get seatWalkIn => '当日客を案内する';
+
+  @override
+  String get markReserved => '予約済みとしてマーク';
+
+  @override
+  String get clearTableAvailable => 'テーブルを片付ける（空席へ）';
+
+  @override
+  String get occupied => '満席';
+
+  @override
+  String get available => '空席';
+
+  @override
+  String get reserved => '予約済み';
+
+  @override
+  String get logSpoilage => '廃棄/ロスを記録';
+
+  @override
+  String get quantityWasted => '廃棄数量';
+
+  @override
+  String get expired => '期限切れ';
+
+  @override
+  String get spilled => 'こぼした/破損';
+
+  @override
+  String get badQuality => '品質不良';
+
+  @override
+  String get mistake => '注文ミス等';
+
+  @override
+  String get logWaste => '廃棄を記録';
+
+  @override
+  String get recentWasteLogs => '最近の廃棄ログ';
+
+  @override
+  String get noWasteLogs => '廃棄ログはありません。';
+
+  @override
+  String get wasteLoggedSuccess => '廃棄が正常に記録されました';
+
+  @override
+  String get selectItem => 'アイテムを選択してください';
+
+  @override
+  String get selectReason => '理由を選択してください';
+
+  @override
+  String get enterQuantity => '数量を入力してください';
+
+  @override
+  String get invalidNumber => '無効な数値です';
+
+  @override
+  String get item => 'アイテム';
+
+  @override
+  String get markCompleted => 'ダブルタップで完了';
+
+  @override
+  String get totalWeeklyHours => '週合計の勤務時間';
+
+  @override
+  String get upcomingShifts => '今後のシフト';
+
+  @override
+  String get today => '本日';
+
+  @override
+  String get justNow => 'たった今';
+
+  @override
+  String minsAgo(int mins) {
+    return '$mins分前';
+  }
+
+  @override
+  String hoursMinsAgo(int hours, int mins) {
+    return '$hours時間$mins分前';
+  }
+
+  @override
+  String errorMsg(String error) {
+    return 'エラー: $error';
+  }
 }

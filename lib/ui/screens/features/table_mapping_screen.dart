@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_nav.dart';
 import '../../../core/models/reservation_models.dart';
+import '../../../l10n/app_localizations.dart';
 
 class TableMappingScreen extends StatefulWidget {
   const TableMappingScreen({super.key});
@@ -11,7 +12,7 @@ class TableMappingScreen extends StatefulWidget {
 
 class _TableMappingScreenState extends State<TableMappingScreen> {
   int _selectedFloor = 0; 
-  final List<String> _floors = ["Ground Floor", "1st Floor", "2nd Floor", "Rooftop"];
+  // Floor names will be retrieved from l10n in build()
   
   late List<TableModel> _mapTables;
 
@@ -34,6 +35,7 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
         builder: (context) {
+           final l10n = AppLocalizations.of(context)!;
            return SafeArea(
              child: Padding(
                padding: const EdgeInsets.all(24.0),
@@ -48,17 +50,17 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
                        decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.circular(2)),
                      )
                    ),
-                   Text("Table ${table.label}", style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+                   Text("${l10n.navTableMap.split(' ')[0]} ${table.label}", style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
                    const SizedBox(height: 8),
                    Row(
                      children: [
                        Icon(Icons.people_outline, size: 20, color: Theme.of(context).colorScheme.primary),
                        const SizedBox(width: 8),
-                       Text("${table.seats} Seats"),
+                       Text(l10n.seats(table.seats)),
                        const SizedBox(width: 16),
                        Icon(Icons.info_outline, size: 20, color: Theme.of(context).colorScheme.primary),
                        const SizedBox(width: 8),
-                       Text(_getStatusString(table.status), style: const TextStyle(fontWeight: FontWeight.w600)),
+                       Text(_getStatusString(table.status, l10n), style: const TextStyle(fontWeight: FontWeight.w600)),
                      ],
                    ),
                    const SizedBox(height: 32),
@@ -70,7 +72,7 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
                            _updateTable(table.id, TableStatus.selected); // Occupied
                            Navigator.pop(context);
                        },
-                       child: const Text("Seat Walk-In Customer"),
+                       child: Text(l10n.seatWalkIn),
                      ),
                      const SizedBox(height: 12),
                      OutlinedButton(
@@ -78,7 +80,7 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
                            _updateTable(table.id, TableStatus.reserved);
                            Navigator.pop(context);
                        },
-                       child: const Text("Mark as Reserved"),
+                       child: Text(l10n.markReserved),
                      ),
                    ] else ...[
                      OutlinedButton(
@@ -86,7 +88,7 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
                            _updateTable(table.id, TableStatus.available);
                            Navigator.pop(context);
                        },
-                       child: const Text("Clear Table (Available)"),
+                       child: Text(l10n.clearTableAvailable),
                      ),
                    ],
                    const SizedBox(height: 12),
@@ -107,21 +109,23 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
     });
   }
 
-  String _getStatusString(TableStatus status) {
-    if (status == TableStatus.available) return "Available";
-    if (status == TableStatus.selected) return "Occupied";
-    if (status == TableStatus.reserved) return "Reserved";
+  String _getStatusString(TableStatus status, AppLocalizations l10n) {
+    if (status == TableStatus.available) return l10n.available;
+    if (status == TableStatus.selected) return l10n.occupied;
+    if (status == TableStatus.reserved) return l10n.reserved;
     return "Unknown";
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final floors = [l10n.groundFloor, l10n.firstFloor, l10n.secondFloor, l10n.rooftop];
     final tables = _mapTables.where((t) => t.floor == _selectedFloor).toList();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Table Mapping"),
+        title: Text(l10n.tableMappingTitle),
         centerTitle: false,
       ),
       bottomNavigationBar: const CustomBottomNavBar(),
@@ -133,12 +137,12 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               scrollDirection: Axis.horizontal,
-              itemCount: _floors.length,
+              itemCount: floors.length,
               separatorBuilder: (context, index) => const SizedBox(width: 10),
               itemBuilder: (context, index) {
                 final isSelected = index == _selectedFloor;
                 return ChoiceChip(
-                  label: Text(_floors[index]),
+                  label: Text(floors[index]),
                   selected: isSelected,
                   onSelected: (selected) {
                     setState(() => _selectedFloor = index);
@@ -173,7 +177,7 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
                   // Floor indicator
                   Center(
                     child: Text(
-                      _floors[_selectedFloor],
+                      floors[_selectedFloor],
                       style: theme.textTheme.displayLarge?.copyWith(
                         color: theme.dividerColor.withValues(alpha: 0.05),
                         fontWeight: FontWeight.bold,
@@ -206,9 +210,9 @@ class _TableMappingScreenState extends State<TableMappingScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildLegendItem(theme, Colors.grey[400]!, "Available"),
-                  _buildLegendItem(theme, theme.colorScheme.primary, "Occupied"),
-                  _buildLegendItem(theme, theme.colorScheme.error, "Reserved"), 
+                  _buildLegendItem(theme, Colors.grey[400]!, l10n.available),
+                  _buildLegendItem(theme, theme.colorScheme.primary, l10n.occupied),
+                  _buildLegendItem(theme, theme.colorScheme.error, l10n.reserved), 
                 ],
               ),
             ),

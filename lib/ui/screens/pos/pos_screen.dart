@@ -7,6 +7,7 @@ import '../../../core/providers/auth_provider.dart';
 import '../../../core/services/firestore_service.dart';
 import '../../widgets/custom_drawer.dart';
 import '../../widgets/custom_bottom_nav.dart';
+import '../../../l10n/app_localizations.dart';
 
 class POSScreen extends StatefulWidget {
   const POSScreen({super.key});
@@ -29,13 +30,13 @@ class _POSScreenState extends State<POSScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Point of Sale'),
+        title: Text(AppLocalizations.of(context)!.posTitle),
         actions: [
             Padding(
               padding: const EdgeInsets.only(right: 24.0),
               child: Center(
                 child: Text(
-                  _cart.isEmpty ? 'Cart Empty' : '${_cart.values.reduce((a, b) => a + b)} Items',
+                  _cart.isEmpty ? AppLocalizations.of(context)!.cartEmpty : '${_cart.values.reduce((a, b) => a + b)} ${AppLocalizations.of(context)!.itemsCount}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -56,7 +57,7 @@ class _POSScreenState extends State<POSScreen> {
               backgroundColor: const Color(0xFF00C853),
               foregroundColor: Colors.white,
               icon: const Icon(Icons.add),
-              label: const Text('Add Menu Item'),
+              label: Text(AppLocalizations.of(context)!.addMenuItem),
             )
           : null,
       // drawer: const CustomDrawer(),
@@ -74,7 +75,7 @@ class _POSScreenState extends State<POSScreen> {
                 
                 final dishes = snapshot.data ?? [];
                 if (dishes.isEmpty) {
-                   return const Center(child: Text("No items in menu. Try seeding data."));
+                   return Center(child: Text(AppLocalizations.of(context)!.noItemsInMenu));
                 }
 
                 return Padding(
@@ -146,7 +147,7 @@ class _POSScreenState extends State<POSScreen> {
                                             padding: const EdgeInsets.symmetric(vertical: 0),
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                                           ),
-                                          child: const Text('ADD TO CART', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                                          child: Text(AppLocalizations.of(context)!.addToCart.toUpperCase(), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                                         ),
                                     ),
                                   ],
@@ -173,7 +174,7 @@ class _POSScreenState extends State<POSScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Text('Session Log', style: theme.textTheme.titleMedium),
+                      child: Text(AppLocalizations.of(context)!.sessionLog, style: theme.textTheme.titleMedium),
                     ),
                     Expanded(
                       child: ListView(
@@ -220,7 +221,7 @@ class _POSScreenState extends State<POSScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text('Total:', style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text('${AppLocalizations.of(context)!.total}:', style: const TextStyle(fontWeight: FontWeight.bold)),
                               Text(
                                 '\$${_cart.entries.fold(0.0, (sum, e) => sum + (e.key.price * e.value)).toStringAsFixed(2)}',
                                 style: TextStyle(fontWeight: FontWeight.bold, color: theme.primaryColor, fontSize: 18),
@@ -240,12 +241,12 @@ class _POSScreenState extends State<POSScreen> {
                               ),
                               child: _isLoading 
                                 ? const CircularProgressIndicator(color: Colors.white)
-                                : const Text('CONFIRM ORDER', style: TextStyle(fontWeight: FontWeight.bold)),
+                                : Text(AppLocalizations.of(context)!.confirmOrder.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.bold)),
                             ),
                           ),
                           TextButton(
                             onPressed: () => setState(() => _cart.clear()),
-                            child: const Text('Clear Cart', style: TextStyle(color: Colors.redAccent)),
+                            child: Text(AppLocalizations.of(context)!.clearCart, style: const TextStyle(color: Colors.redAccent)),
                           ),
                         ],
                       ),
@@ -284,8 +285,8 @@ class _POSScreenState extends State<POSScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Order Confirmed Successfully!'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.orderConfirmed),
             backgroundColor: Colors.green,
           ),
         );

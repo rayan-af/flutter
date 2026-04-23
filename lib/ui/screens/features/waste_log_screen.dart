@@ -6,6 +6,7 @@ import '../../../core/providers/inventory_provider.dart';
 import '../../../core/providers/auth_provider.dart';
 import '../../widgets/custom_drawer.dart';
 import '../../widgets/custom_bottom_nav.dart';
+import '../../../l10n/app_localizations.dart';
 
 class WasteLogScreen extends StatefulWidget {
   const WasteLogScreen({super.key});
@@ -27,12 +28,13 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
     final inventoryProvider = Provider.of<InventoryProvider>(context);
     final authProvider = Provider.of<AuthProvider>(context);
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     
     // Strict Theme: Background #1A1616 (Scaffold), Card #2D2424 (CardTheme)
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Waste Log'),
+        title: Text(l10n.wasteLogTitle),
       ),
       // drawer: const CustomDrawer(),
       body: SingleChildScrollView(
@@ -52,7 +54,7 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('Log Spoilage / Waste', style: theme.textTheme.titleMedium),
+                        Text(l10n.logSpoilage, style: theme.textTheme.titleMedium),
                         const SizedBox(height: 24),
                         // Dropdown for Inventory Items
                         DropdownButtonFormField<String>(
@@ -67,31 +69,31 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
                           onChanged: (value) {
                              setState(() => _selectedItem = value);
                           },
-                          validator: (value) => value == null ? 'Please select an item' : null,
+                          validator: (value) => value == null ? l10n.selectItem : null,
                         ),
                         const SizedBox(height: 16),
                         TextFormField(
                           controller: _quantityController,
-                          decoration: const InputDecoration(labelText: 'Quantity Wasted'),
+                          decoration: InputDecoration(labelText: l10n.quantityWasted),
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           validator: (value) {
-                            if (value == null || value.isEmpty) return 'Enter quantity';
-                            if (double.tryParse(value) == null) return 'Invalid number';
+                            if (value == null || value.isEmpty) return l10n.enterQuantity;
+                            if (double.tryParse(value) == null) return l10n.invalidNumber;
                             return null;
                           },
                         ),
                         const SizedBox(height: 16),
                          DropdownButtonFormField<String>(
-                          decoration: const InputDecoration(labelText: 'Reason'),
+                          decoration: InputDecoration(labelText: l10n.reason),
                           value: _selectedReason,
-                          items: const [
-                            DropdownMenuItem(value: 'Expired', child: Text('Expired')),
-                            DropdownMenuItem(value: 'Spilled', child: Text('Spilled')),
-                            DropdownMenuItem(value: 'Bad Quality', child: Text('Bad Quality')),
-                             DropdownMenuItem(value: 'Mistake', child: Text('Mistake')),
+                          items: [
+                            DropdownMenuItem(value: 'Expired', child: Text(l10n.expired)),
+                            DropdownMenuItem(value: 'Spilled', child: Text(l10n.spilled)),
+                            DropdownMenuItem(value: 'Bad Quality', child: Text(l10n.badQuality)),
+                             DropdownMenuItem(value: 'Mistake', child: Text(l10n.mistake)),
                           ],
                           onChanged: (value) => setState(() => _selectedReason = value),
-                          validator: (value) => value == null ? 'Select a reason' : null,
+                          validator: (value) => value == null ? l10n.selectReason : null,
                         ),
                          const SizedBox(height: 24),
                          SizedBox(
@@ -102,10 +104,10 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
                                backgroundColor: theme.colorScheme.error, // Red for waste
                                foregroundColor: Colors.white,
                              ),
-                             child: _isLoading 
+                              child: _isLoading 
                                 ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                                : const Text('LOG WASTE'),
-                           ),
+                                : Text(l10n.logWaste),
+                            ),
                          )
                       ],
                     ),
@@ -124,7 +126,7 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                      mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Recent Waste Logs', style: theme.textTheme.titleMedium),
+                      Text(l10n.recentWasteLogs, style: theme.textTheme.titleMedium),
                       const SizedBox(height: 16),
                       StreamBuilder<QuerySnapshot>(
                         stream: _firestoreService.getWasteLogsStream(),
@@ -136,7 +138,7 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
                           final logs = snapshot.data?.docs ?? [];
                           
                           if (logs.isEmpty) {
-                            return const Center(child: Padding(padding: EdgeInsets.all(16), child: Text("No waste logs recorded.")));
+                            return Center(child: Padding(padding: const EdgeInsets.all(16), child: Text(l10n.noWasteLogs)));
                           }
 
                           return ListView.separated(
@@ -194,6 +196,7 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
   }
 
   Future<void> _submitLog(String userId) async {
+    final l10n = AppLocalizations.of(context)!;
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
@@ -210,7 +213,7 @@ class _WasteLogScreenState extends State<WasteLogScreen> {
 
       if(mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Waste Logged Successfully'), backgroundColor: Colors.green),
+          SnackBar(content: Text(l10n.wasteLoggedSuccess), backgroundColor: Colors.green),
         );
       }
     } catch (e) {

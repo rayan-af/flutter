@@ -57,6 +57,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTitle => 'Settings';
 
   @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get unit => 'Unit';
+
+  @override
   String get navHome => 'Home';
 
   @override
@@ -105,7 +123,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navOrders => 'Orders';
 
   @override
-  String get navSchedule => 'Schedule';
+  String get navSchedule => 'Work Time';
 
   @override
   String greeting(String name) {
@@ -344,6 +362,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wasteLoggedActivity => 'Waste Logged';
 
   @override
+  String get total => 'Total';
+
+  @override
+  String get status => 'Status';
+
+  @override
   String get lost => 'Lost';
 
   @override
@@ -361,4 +385,257 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get aiAssistantError =>
       'Sorry, I\'m having trouble connecting right now. 😔';
+
+  @override
+  String get recipeCostingTitle => 'Recipe Costing';
+
+  @override
+  String get selectTemplate => 'Select Template';
+
+  @override
+  String get selectMenuItem => 'Select Menu Item (Optional)';
+
+  @override
+  String get plateInputs => 'Plate Inputs';
+
+  @override
+  String get plateCostLabel => 'Total Plate Cost (\$)';
+
+  @override
+  String get plateCostHelper => 'Auto-calculated from recipe or manual.';
+
+  @override
+  String get targetPriceLabel => 'Target Sales Price (\$)';
+
+  @override
+  String get targetPriceHelper => 'Menu price for the customer.';
+
+  @override
+  String get grossProfitMargin => 'GROSS PROFIT MARGIN';
+
+  @override
+  String get profitPerPlate => 'Profit per Plate';
+
+  @override
+  String get missingIngredientsWarning =>
+      'Warning: Some ingredients not found in inventory. Cost may be inaccurate.';
+
+  @override
+  String get tableMappingTitle => 'Table Mapping';
+
+  @override
+  String get chefOrdersTitle => 'Chef Orders';
+
+  @override
+  String get inventoryTitle => 'Inventory';
+
+  @override
+  String get posTitle => 'POS Terminal';
+
+  @override
+  String get wasteLogTitle => 'Waste Log';
+
+  @override
+  String get cartEmpty => 'Cart Empty';
+
+  @override
+  String get itemsCount => 'Items';
+
+  @override
+  String get addMenuItem => 'Add Menu Item';
+
+  @override
+  String get noItemsInMenu => 'No items in menu. Try seeding data.';
+
+  @override
+  String get addToCart => 'Add to Cart';
+
+  @override
+  String get sessionLog => 'Session Log';
+
+  @override
+  String get confirmOrder => 'Confirm Order';
+
+  @override
+  String get clearCart => 'Clear Cart';
+
+  @override
+  String get orderConfirmed => 'Order Confirmed Successfully!';
+
+  @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get scheduleTitle => 'Work Time';
+
+  @override
+  String get inventoryListing => 'Inventory Listing';
+
+  @override
+  String get inventoryManagement => 'Inventory Management';
+
+  @override
+  String get newItem => 'New Item';
+
+  @override
+  String get itemName => 'Item Name';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get priceCost => 'Price (Cost)';
+
+  @override
+  String get quickQuantity => 'Quick Quantity';
+
+  @override
+  String get actions => 'Actions';
+
+  @override
+  String get lowStock => 'Low Stock';
+
+  @override
+  String get inStock => 'In Stock';
+
+  @override
+  String get confirmDelete => 'Confirm Delete';
+
+  @override
+  String removeInventoryItem(Object name) {
+    return 'Remove $name from inventory?';
+  }
+
+  @override
+  String updateItem(Object name) {
+    return 'Update $name';
+  }
+
+  @override
+  String get addQuantity => 'Add Quantity';
+
+  @override
+  String get addInventoryItem => 'Add Inventory Item';
+
+  @override
+  String get costPrice => 'Cost / Price';
+
+  @override
+  String get addItemSuccess => 'Item added to Inventory!';
+
+  @override
+  String get liquid => 'Liquid';
+
+  @override
+  String get solid => 'Solid';
+
+  @override
+  String get groundFloor => 'Ground Floor';
+
+  @override
+  String get firstFloor => '1st Floor';
+
+  @override
+  String get secondFloor => '2nd Floor';
+
+  @override
+  String get rooftop => 'Rooftop';
+
+  @override
+  String seats(int count) {
+    return '$count Seats';
+  }
+
+  @override
+  String get seatWalkIn => 'Seat Walk-In Customer';
+
+  @override
+  String get markReserved => 'Mark as Reserved';
+
+  @override
+  String get clearTableAvailable => 'Clear Table (Available)';
+
+  @override
+  String get occupied => 'Occupied';
+
+  @override
+  String get available => 'Available';
+
+  @override
+  String get reserved => 'Reserved';
+
+  @override
+  String get logSpoilage => 'Log Spoilage / Waste';
+
+  @override
+  String get quantityWasted => 'Quantity Wasted';
+
+  @override
+  String get expired => 'Expired';
+
+  @override
+  String get spilled => 'Spilled';
+
+  @override
+  String get badQuality => 'Bad Quality';
+
+  @override
+  String get mistake => 'Mistake';
+
+  @override
+  String get logWaste => 'LOG WASTE';
+
+  @override
+  String get recentWasteLogs => 'Recent Waste Logs';
+
+  @override
+  String get noWasteLogs => 'No waste logs recorded.';
+
+  @override
+  String get wasteLoggedSuccess => 'Waste Logged Successfully';
+
+  @override
+  String get selectItem => 'Please select an item';
+
+  @override
+  String get selectReason => 'Select a reason';
+
+  @override
+  String get enterQuantity => 'Enter quantity';
+
+  @override
+  String get invalidNumber => 'Invalid number';
+
+  @override
+  String get item => 'Item';
+
+  @override
+  String get markCompleted => 'Double-tap to mark done';
+
+  @override
+  String get totalWeeklyHours => 'Total Weekly Hours';
+
+  @override
+  String get upcomingShifts => 'Upcoming Shifts';
+
+  @override
+  String get today => 'TODAY';
+
+  @override
+  String get justNow => 'Just now';
+
+  @override
+  String minsAgo(int mins) {
+    return '$mins mins ago';
+  }
+
+  @override
+  String hoursMinsAgo(int hours, int mins) {
+    return '${hours}h ${mins}m ago';
+  }
+
+  @override
+  String errorMsg(String error) {
+    return 'Error: $error';
+  }
 }

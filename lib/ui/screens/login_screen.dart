@@ -7,6 +7,7 @@ import 'signup_screen.dart';
 import 'dashboard/manager_dashboard_screen.dart';
 import '../../core/models/user_model.dart';
 import 'features/table_mapping_screen.dart';
+import 'dashboard/chef_orders_screen.dart';
 import '../../l10n/app_localizations.dart';
 
 
@@ -56,17 +57,34 @@ class _LoginScreenState extends State<LoginScreen> {
         if (authProvider.currentUser?.role == UserRole.manager) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const ManagerDashboardScreen()),
+            MaterialPageRoute(
+              settings: const RouteSettings(name: '/manager_dashboard'),
+              builder: (_) => const ManagerDashboardScreen()
+            ),
           );
         } else if (authProvider.currentUser?.role == UserRole.reception) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const TableMappingScreen()),
+            MaterialPageRoute(
+              settings: const RouteSettings(name: '/table_mapping'),
+              builder: (_) => const TableMappingScreen()
+            ),
+          );
+        } else if (authProvider.currentUser?.role == UserRole.chef) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              settings: const RouteSettings(name: '/chef_orders'),
+              builder: (_) => const ChefOrdersScreen()
+            ),
           );
         } else {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const HomeScreen()),
+            MaterialPageRoute(
+              settings: const RouteSettings(name: '/home'),
+              builder: (_) => const HomeScreen()
+            ),
           );
         }
       } else {

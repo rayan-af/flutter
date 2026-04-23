@@ -77,7 +77,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 ),
               
               // Center Floating Action Button
-              if (role != UserRole.reception && role != UserRole.chef)
+              if (role != UserRole.reception && role != UserRole.chef && role != UserRole.employee)
                 Positioned(
                   top: -24,
                   left: 0,
@@ -112,18 +112,8 @@ class CustomBottomNavBar extends StatelessWidget {
           }, theme));
         break;
       case UserRole.employee:
-        items.add(_buildNavItem(context, Icons.home_outlined, Icons.home_rounded, l10n.navHome, 
-          currentRoute == '/' || currentRoute == '/home', () {
-            if (currentRoute != '/' && currentRoute != '/home') {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-            }
-          }, theme));
-        items.add(_buildNavItem(context, Icons.local_bar_outlined, Icons.local_bar_rounded, l10n.navDrinks, 
-          currentRoute == '/drinks', () {
-            if (currentRoute != '/drinks') {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const DrinksScreen()));
-            }
-          }, theme));
+        // Waiter interface: Profile, Logout, Work Time (Schedule)
+        // Handled in _buildRightItems
         break;
       case UserRole.reception:
         items.add(_buildNavItem(context, Icons.table_restaurant_outlined, Icons.table_restaurant_rounded, l10n.navTableMap, 
@@ -137,7 +127,10 @@ class CustomBottomNavBar extends StatelessWidget {
         items.add(_buildNavItem(context, Icons.receipt_long_outlined, Icons.receipt_long_rounded, l10n.navOrders, 
           currentRoute == '/' || currentRoute == '/chef_orders', () {
             if (currentRoute != '/' && currentRoute != '/chef_orders') {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ChefOrdersScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                settings: const RouteSettings(name: '/chef_orders'),
+                builder: (_) => const ChefOrdersScreen()
+              ));
             }
           }, theme));
         break;
@@ -162,7 +155,6 @@ class CustomBottomNavBar extends StatelessWidget {
 
     switch (role) {
       case UserRole.manager:
-      case UserRole.employee:
         items.add(_buildNavItem(context, Icons.inventory_2_outlined, Icons.inventory_2_rounded, l10n.navInventory, 
           currentRoute == '/inventory', () {
             if (currentRoute != '/inventory') {
@@ -170,12 +162,16 @@ class CustomBottomNavBar extends StatelessWidget {
             }
           }, theme));
         break;
+      case UserRole.employee:
       case UserRole.reception:
       case UserRole.chef:
         items.add(_buildNavItem(context, Icons.calendar_month_outlined, Icons.calendar_month_rounded, l10n.navSchedule, 
           currentRoute == '/schedule', () {
             if (currentRoute != '/schedule') {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ScheduleScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                settings: const RouteSettings(name: '/schedule'),
+                builder: (_) => const ScheduleScreen()
+              ));
             }
           }, theme));
         break;

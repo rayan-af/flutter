@@ -57,6 +57,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsTitle => 'Ajustes';
 
   @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get save => 'Guardar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get update => 'Actualizar';
+
+  @override
+  String get confirm => 'Confirmar';
+
+  @override
+  String get unit => 'Unidad';
+
+  @override
   String get navHome => 'Inicio';
 
   @override
@@ -105,7 +123,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navOrders => 'Pedidos';
 
   @override
-  String get navSchedule => 'Horario';
+  String get navSchedule => 'Tiempo de trabajo';
 
   @override
   String greeting(String name) {
@@ -345,6 +363,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get wasteLoggedActivity => 'Desperdicio registrado';
 
   @override
+  String get total => 'Total';
+
+  @override
+  String get status => 'Estado';
+
+  @override
   String get lost => 'Perdido';
 
   @override
@@ -362,4 +386,258 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get aiAssistantError =>
       'Lo siento, tengo problemas para conectarme ahora mismo. 😔';
+
+  @override
+  String get recipeCostingTitle => 'Costeo de recetas';
+
+  @override
+  String get selectTemplate => 'Seleccionar plantilla';
+
+  @override
+  String get selectMenuItem => 'Seleccionar artículo del menú (Opcional)';
+
+  @override
+  String get plateInputs => 'Entradas del plato';
+
+  @override
+  String get plateCostLabel => 'Costo total del plato (\$)';
+
+  @override
+  String get plateCostHelper =>
+      'Calculado automáticamente desde la receta o manual.';
+
+  @override
+  String get targetPriceLabel => 'Precio de venta objetivo (\$)';
+
+  @override
+  String get targetPriceHelper => 'Precio del menú para el cliente.';
+
+  @override
+  String get grossProfitMargin => 'MARGEN DE UTILIDAD BRUTA';
+
+  @override
+  String get profitPerPlate => 'Beneficio por plato';
+
+  @override
+  String get missingIngredientsWarning =>
+      'Advertencia: Algunos ingredientes no se encontraron en el inventario. El costo puede ser inexacto.';
+
+  @override
+  String get tableMappingTitle => 'Mapeo de mesas';
+
+  @override
+  String get chefOrdersTitle => 'Pedidos del chef';
+
+  @override
+  String get inventoryTitle => 'Inventario';
+
+  @override
+  String get posTitle => 'Terminal POS';
+
+  @override
+  String get wasteLogTitle => 'Registro de desperdicios';
+
+  @override
+  String get cartEmpty => 'Carrito vacío';
+
+  @override
+  String get itemsCount => 'Artículos';
+
+  @override
+  String get addMenuItem => 'Añadir artículo al menú';
+
+  @override
+  String get noItemsInMenu => 'No hay artículos en el menú.';
+
+  @override
+  String get addToCart => 'Añadir al carrito';
+
+  @override
+  String get sessionLog => 'Registro de sesión';
+
+  @override
+  String get confirmOrder => 'Confirmar pedido';
+
+  @override
+  String get clearCart => 'Limpiar carrito';
+
+  @override
+  String get orderConfirmed => '¡Pedido confirmado con éxito!';
+
+  @override
+  String get quantity => 'Cantidad';
+
+  @override
+  String get scheduleTitle => 'Tiempo de trabajo';
+
+  @override
+  String get inventoryListing => 'Listado de inventario';
+
+  @override
+  String get inventoryManagement => 'Gestión de inventario';
+
+  @override
+  String get newItem => 'Nuevo artículo';
+
+  @override
+  String get itemName => 'Nombre del artículo';
+
+  @override
+  String get category => 'Categoría';
+
+  @override
+  String get priceCost => 'Precio (Costo)';
+
+  @override
+  String get quickQuantity => 'Cantidad rápida';
+
+  @override
+  String get actions => 'Acciones';
+
+  @override
+  String get lowStock => 'Bajo stock';
+
+  @override
+  String get inStock => 'En stock';
+
+  @override
+  String get confirmDelete => 'Confirmar eliminación';
+
+  @override
+  String removeInventoryItem(Object name) {
+    return '¿Eliminar $name del inventario?';
+  }
+
+  @override
+  String updateItem(Object name) {
+    return 'Actualizar $name';
+  }
+
+  @override
+  String get addQuantity => 'Añadir cantidad';
+
+  @override
+  String get addInventoryItem => 'Añadir artículo al inventario';
+
+  @override
+  String get costPrice => 'Costo / Precio';
+
+  @override
+  String get addItemSuccess => '¡Artículo añadido al inventario!';
+
+  @override
+  String get liquid => 'Líquido';
+
+  @override
+  String get solid => 'Sólido';
+
+  @override
+  String get groundFloor => 'Planta baja';
+
+  @override
+  String get firstFloor => '1ª planta';
+
+  @override
+  String get secondFloor => '2ª planta';
+
+  @override
+  String get rooftop => 'Azotea';
+
+  @override
+  String seats(int count) {
+    return '$count asientos';
+  }
+
+  @override
+  String get seatWalkIn => 'Sentar cliente sin reserva';
+
+  @override
+  String get markReserved => 'Marcar como reservado';
+
+  @override
+  String get clearTableAvailable => 'Limpiar mesa (Disponible)';
+
+  @override
+  String get occupied => 'Ocupado';
+
+  @override
+  String get available => 'Disponible';
+
+  @override
+  String get reserved => 'Reservado';
+
+  @override
+  String get logSpoilage => 'Registrar merma / desperdicio';
+
+  @override
+  String get quantityWasted => 'Cantidad desperdiciada';
+
+  @override
+  String get expired => 'Vencido';
+
+  @override
+  String get spilled => 'Derramado';
+
+  @override
+  String get badQuality => 'Mala calidad';
+
+  @override
+  String get mistake => 'Error';
+
+  @override
+  String get logWaste => 'REGISTRAR DESPERDICIO';
+
+  @override
+  String get recentWasteLogs => 'Registros de desperdicios recientes';
+
+  @override
+  String get noWasteLogs => 'No hay registros de desperdicios.';
+
+  @override
+  String get wasteLoggedSuccess => 'Desperdicio registrado con éxito';
+
+  @override
+  String get selectItem => 'Por favor seleccione un artículo';
+
+  @override
+  String get selectReason => 'Seleccione una razón';
+
+  @override
+  String get enterQuantity => 'Ingrese la cantidad';
+
+  @override
+  String get invalidNumber => 'Número no válido';
+
+  @override
+  String get item => 'Artículo';
+
+  @override
+  String get markCompleted => 'Toca dos veces para marcar como hecho';
+
+  @override
+  String get totalWeeklyHours => 'Total de horas semanales';
+
+  @override
+  String get upcomingShifts => 'Próximos turnos';
+
+  @override
+  String get today => 'HOY';
+
+  @override
+  String get justNow => 'Justo ahora';
+
+  @override
+  String minsAgo(int mins) {
+    return 'Hace $mins min';
+  }
+
+  @override
+  String hoursMinsAgo(int hours, int mins) {
+    return 'Hace ${hours}h ${mins}m';
+  }
+
+  @override
+  String errorMsg(String error) {
+    return 'Error: $error';
+  }
 }

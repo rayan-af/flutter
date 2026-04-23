@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_bottom_nav.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ScheduleScreen extends StatelessWidget {
   const ScheduleScreen({super.key});
@@ -14,7 +15,7 @@ class ScheduleScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("My Schedule"),
+        title: Text(AppLocalizations.of(context)!.scheduleTitle),
         centerTitle: false,
         actions: [
           IconButton(
@@ -56,7 +57,7 @@ class ScheduleScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Total Weekly Hours",
+                          AppLocalizations.of(context)!.totalWeeklyHours,
                           style: TextStyle(
                             color: theme.colorScheme.onPrimary.withOpacity(0.8),
                             fontSize: 14,
@@ -93,7 +94,7 @@ class ScheduleScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   Text(
-                    "Upcoming Shifts",
+                    AppLocalizations.of(context)!.upcomingShifts,
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -190,7 +191,7 @@ class ScheduleScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      "TODAY",
+                      AppLocalizations.of(context)!.today.toUpperCase(),
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,

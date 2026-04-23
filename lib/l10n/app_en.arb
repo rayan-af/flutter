@@ -15,7 +15,12 @@
   "language": "Language",
   "theme": "Theme",
   "settingsTitle": "Settings",
-  
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "update": "Update",
+  "confirm": "Confirm",
+  "unit": "Unit",
   "navHome": "Home",
   "navDashboard": "Dashboard",
   "navPOS": "POS Terminal",
@@ -32,8 +37,7 @@
   "navProfile": "Profile",
   "navSearch": "Search",
   "navOrders": "Orders",
-  "navSchedule": "Schedule",
-  
+  "navSchedule": "Work Time",
   "greeting": "Hey, {name}",
   "@greeting": {
     "placeholders": {
@@ -50,7 +54,6 @@
   "seeMore": "See more",
   "noPopularDishes": "No popular dishes found",
   "noNewDishes": "No other dishes found",
-  
   "loginTitle": "RestoManager",
   "loginSubtitle": "Login to your account to continue",
   "emailLabel": "Email *",
@@ -73,18 +76,15 @@
   "fullNameError": "Please enter your name",
   "emailInvalidError": "Please enter a valid email",
   "navCreateAccount": "Create Account",
-  
   "preferences": "PREFERENCES",
   "aiAssistant": "AI Assistant",
   "bookTable": "Book a Table",
-  
   "catAll": "All",
   "catFastFood": "Fast food",
   "catCasual": "Casual",
   "catFineDining": "Fine dining",
   "catCafe": "Cafe",
   "catBuffet": "Buffet",
-  
   "menuTitle": "Our Menu",
   "addedToCart": "{name} added to cart",
   "@addedToCart": {
@@ -105,7 +105,6 @@
   "catDesserts": "Desserts",
   "catKidsMenu": "Kids Menu",
   "catDrinks": "Drinks",
-  
   "drinksFoodTitle": "Drinks & Food",
   "tabDrinks": "Drinks",
   "tabFood": "Food",
@@ -133,14 +132,123 @@
   "lost": "Lost",
   "qty": "Qty",
   "reason": "Reason",
-  
   "aiAssistantTitle": "AI Cafe Assistant",
   "aiAssistantHint": "Ask about the menu or reservations...",
   "aiAssistantError": "Sorry, I'm having trouble connecting right now. 😔",
-  
+  "recipeCostingTitle": "Recipe Costing",
+  "selectTemplate": "Select Template",
+  "selectMenuItem": "Select Menu Item (Optional)",
+  "plateInputs": "Plate Inputs",
+  "plateCostLabel": "Total Plate Cost ($)",
+  "plateCostHelper": "Auto-calculated from recipe or manual.",
+  "targetPriceLabel": "Target Sales Price ($)",
+  "targetPriceHelper": "Menu price for the customer.",
+  "grossProfitMargin": "GROSS PROFIT MARGIN",
+  "profitPerPlate": "Profit per Plate",
+  "missingIngredientsWarning": "Warning: Some ingredients not found in inventory. Cost may be inaccurate.",
+  "tableMappingTitle": "Table Mapping",
+  "chefOrdersTitle": "Chef Orders",
+  "inventoryTitle": "Inventory",
+  "posTitle": "POS Terminal",
+  "wasteLogTitle": "Waste Log",
+  "cartEmpty": "Cart Empty",
+  "itemsCount": "Items",
+  "addMenuItem": "Add Menu Item",
+  "noItemsInMenu": "No items in menu. Try seeding data.",
+  "addToCart": "Add to Cart",
+  "sessionLog": "Session Log",
+  "confirmOrder": "Confirm Order",
+  "clearCart": "Clear Cart",
+  "orderConfirmed": "Order Confirmed Successfully!",
+  "quantity": "Quantity",
+  "scheduleTitle": "Work Time",
+  "inventoryListing": "Inventory Listing",
+  "inventoryManagement": "Inventory Management",
+  "newItem": "New Item",
+  "itemName": "Item Name",
+  "category": "Category",
+  "priceCost": "Price (Cost)",
+  "quickQuantity": "Quick Quantity",
+  "actions": "Actions",
+  "lowStock": "Low Stock",
+  "inStock": "In Stock",
+  "confirmDelete": "Confirm Delete",
+  "removeInventoryItem": "Remove {name} from inventory?",
+  "updateItem": "Update {name}",
+  "addQuantity": "Add Quantity",
+  "addInventoryItem": "Add Inventory Item",
+  "costPrice": "Cost / Price",
+  "addItemSuccess": "Item added to Inventory!",
+  "liquid": "Liquid",
+  "solid": "Solid",
+  "groundFloor": "Ground Floor",
+  "firstFloor": "1st Floor",
+  "secondFloor": "2nd Floor",
+  "rooftop": "Rooftop",
+  "seats": "{count} Seats",
+  "@seats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "seatWalkIn": "Seat Walk-In Customer",
+  "markReserved": "Mark as Reserved",
+  "clearTableAvailable": "Clear Table (Available)",
+  "occupied": "Occupied",
+  "available": "Available",
+  "reserved": "Reserved",
+  "logSpoilage": "Log Spoilage / Waste",
+  "quantityWasted": "Quantity Wasted",
+  "expired": "Expired",
+  "spilled": "Spilled",
+  "badQuality": "Bad Quality",
+  "mistake": "Mistake",
+  "logWaste": "LOG WASTE",
+  "recentWasteLogs": "Recent Waste Logs",
+  "noWasteLogs": "No waste logs recorded.",
+  "wasteLoggedSuccess": "Waste Logged Successfully",
+  "selectItem": "Please select an item",
+  "selectReason": "Select a reason",
+  "enterQuantity": "Enter quantity",
+  "invalidNumber": "Invalid number",
+  "item": "Item",
+  "markCompleted": "Double-tap to mark done",
+  "totalWeeklyHours": "Total Weekly Hours",
+  "upcomingShifts": "Upcoming Shifts",
+  "today": "TODAY",
   "@noItemsAvailable": {
     "placeholders": {
       "type": {
+        "type": "String"
+      }
+    }
+  },
+  "justNow": "Just now",
+  "minsAgo": "{mins} mins ago",
+  "@minsAgo": {
+    "placeholders": {
+      "mins": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursMinsAgo": "{hours}h {mins}m ago",
+  "@hoursMinsAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "mins": {
+        "type": "int"
+      }
+    }
+  },
+  "errorMsg": "Error: {error}",
+  "@errorMsg": {
+    "placeholders": {
+      "error": {
         "type": "String"
       }
     }

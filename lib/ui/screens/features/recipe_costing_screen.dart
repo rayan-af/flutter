@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../widgets/custom_drawer.dart';
 import '../../widgets/custom_bottom_nav.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../core/providers/inventory_provider.dart';
 import '../../../core/models/dish_model.dart';
 import '../../../core/models/inventory_model.dart';
@@ -94,7 +95,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
     
     if (missingIngredients) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Warning: Some ingredients not found in inventory. Cost may be inaccurate.')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.missingIngredientsWarning)),
       );
     }
   }
@@ -102,6 +103,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final inventoryProvider = Provider.of<InventoryProvider>(context);
 
     // Mock dishes (or fetch from provider/firestore if we had a MenuProvider exposed)
@@ -118,7 +120,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recipe Costing'),
+        title: Text(l10n.recipeCostingTitle),
       ),
       // drawer: const CustomDrawer(),
       body: SingleChildScrollView(
@@ -133,7 +135,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
                       Text(
-                        'Select Template',
+                        l10n.selectTemplate,
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: theme.textTheme.bodySmall?.color,
@@ -142,7 +144,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
                       const SizedBox(height: 16),
                       DropdownButtonFormField<DishModel>(
                         decoration: InputDecoration(
-                          labelText: 'Select Menu Item (Optional)',
+                          labelText: l10n.selectMenuItem,
                           prefixIcon: Icon(Icons.restaurant_menu_rounded, color: theme.colorScheme.primary),
                           filled: true,
                           fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
@@ -180,7 +182,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
                                 child: Icon(Icons.calculate_rounded, color: theme.colorScheme.primary),
                               ),
                               const SizedBox(width: 16),
-                              Text('Plate Inputs', 
+                              Text(l10n.plateInputs, 
                                 style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)
                               ),
                             ],
@@ -191,9 +193,9 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             decoration: InputDecoration(
-                              labelText: 'Total Plate Cost (\$)',
+                              labelText: l10n.plateCostLabel,
                               hintText: '0.00',
-                              helperText: 'Auto-calculated from recipe or manual.',
+                              helperText: l10n.plateCostHelper,
                               suffixText: 'USD',
                               prefixIcon: Icon(Icons.attach_money, color: theme.colorScheme.secondary),
                               filled: true,
@@ -206,9 +208,9 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             decoration: InputDecoration(
-                              labelText: 'Target Sales Price (\$)',
+                              labelText: l10n.targetPriceLabel,
                               hintText: '0.00',
-                              helperText: 'Menu price for the customer.',
+                              helperText: l10n.targetPriceHelper,
                               suffixText: 'USD',
                               prefixIcon: Icon(Icons.point_of_sale_rounded, color: theme.colorScheme.primary),
                               filled: true,
@@ -256,7 +258,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Text(
-                              'GROSS PROFIT MARGIN', 
+                              l10n.grossProfitMargin, 
                               style: TextStyle(
                                 color: marginColor,
                                 fontWeight: FontWeight.w900,
@@ -290,7 +292,7 @@ class _RecipeCostingScreenState extends State<RecipeCostingScreen> {
                                 Icon(Icons.monetization_on_rounded, color: marginColor),
                                 const SizedBox(width: 12),
                                 Text(
-                                  'Profit per Plate: ',
+                                  '${l10n.profitPerPlate}: ',
                                   style: TextStyle(color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7), fontWeight: FontWeight.w600),
                                 ),
                                 Text(

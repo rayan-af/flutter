@@ -94,7 +94,7 @@
 
 ### 📅 Employee Shifts (Work Time)
 <p align="center">
-  <img src="assets/images/worktime.png" width="300">
+  <img src="assets/images/worktime.png" width="300"> 
 </p>
 <p align="center">
   <i>A dedicated scheduling screen where employees can check their upcoming work shifts, specific hours, and daily roles (e.g., Main floor, Hosts Stand).</i>

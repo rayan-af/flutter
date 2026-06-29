@@ -1,0 +1,339 @@
+import 'package:flutter/material.dart';
+
+class DishModel {
+  final String id;
+  final String name;
+  final String imageUrl;
+  final double price;
+  final double rating;
+  final int reviewCount;
+  final String category;
+  final int calories;
+  final String description;
+  final List<String> ingredients;
+  final Map<String, double> recipe;
+  final int orderCount;
+
+  const DishModel({
+    required this.id,
+    required this.name,
+    required this.imageUrl,
+    required this.price,
+    required this.rating,
+    required this.reviewCount,
+    required this.category,
+    required this.calories,
+    required this.description,
+    required this.ingredients,
+    this.recipe = const {},
+    this.orderCount = 0,
+  });
+
+  static List<DishModel> get mockDishes => [
+    // --- Coffee & Beverages (Cafe Stock Style) ---
+    const DishModel(
+      id: 'bev_1',
+      name: 'Caramel Macchiato',
+      imageUrl: 'assets/images/macchiato.png',
+      price: 5.25,
+      rating: 4.8,
+      reviewCount: 320,
+      category: 'Coffee',
+      calories: 250,
+      description: 'Freshly steamed milk with vanilla-flavored syrup marked with espresso and topped with a caramel drizzle.',
+      ingredients: ['Espresso', 'Milk', 'Vanilla Syrup', 'Caramel Sauce'],
+      recipe: {'Espresso Beans': 18, 'Milk': 300, 'Vanilla Syrup': 2, 'Caramel Sauce': 10}, // g, ml, pumps, g
+    ),
+    const DishModel(
+      id: 'bev_2',
+      name: 'Cappuccino',
+      imageUrl: 'assets/images/cappuccino.png',
+      price: 4.50,
+      rating: 4.7,
+      reviewCount: 210,
+      category: 'Coffee',
+      calories: 120,
+      description: 'Dark, rich espresso lies in wait under a smoothed and stretched layer of thick milk foam.',
+      ingredients: ['Espresso', 'Milk'],
+      recipe: {'Espresso Beans': 18, 'Milk': 200},
+    ),
+    const DishModel(
+      id: 'bev_3',
+      name: 'Caffè Latte',
+      imageUrl: 'assets/images/latte_new.png',
+      price: 4.50,
+      rating: 4.6,
+      reviewCount: 450,
+      category: 'Coffee',
+      calories: 190,
+      description: 'Our dark, rich espresso balanced with steamed milk and a light layer of foam.',
+      ingredients: ['Espresso', 'Milk'],
+      recipe: {'Espresso Beans': 18, 'Milk': 350},
+    ),
+    const DishModel(
+      id: 'bev_4',
+      name: 'Cold Brew',
+      imageUrl: 'assets/images/cold_brew.png',
+      price: 4.25,
+      rating: 4.9,
+      reviewCount: 150,
+      category: 'Coffee',
+      calories: 5,
+      description: 'Handcrafted in small batches daily, slow-steeped in cool water for 20 hours.',
+      ingredients: ['Cold Brew Concentrate', 'Water', 'Ice'],
+      recipe: {'Cold Brew Concentrate': 150, 'Water': 150},
+    ),
+    const DishModel(
+      id: 'bev_5',
+      name: 'Flat White',
+      imageUrl: 'assets/images/flat_white.png',
+      price: 4.75,
+      rating: 4.8,
+      reviewCount: 180,
+      category: 'Coffee',
+      calories: 170,
+      description: 'Smooth ristretto shots of espresso get the perfect amount of steamed whole milk.',
+      ingredients: ['Espresso', 'Milk'],
+      recipe: {'Espresso Beans': 20, 'Milk': 250},
+    ),
+    const DishModel(
+      id: 'bev_6',
+      name: 'Iced Black Tea Lemonade',
+      imageUrl: 'assets/images/iced_tea_lemonade.png',
+      price: 3.95,
+      rating: 4.6,
+      reviewCount: 120,
+      category: 'Drinks',
+      calories: 90,
+      description: 'Premium black tea sweetened and shaken with lemonade and ice.',
+      ingredients: ['Black Tea', 'Lemonade', 'Ice', 'Liquid Cane Sugar'],
+      recipe: {'Black Tea': 150, 'Lemonade': 100, 'Ice': 50, 'Syrup': 15},
+    ),
+
+    // --- Food Items (Melting Pot / Bistro Style) ---
+    const DishModel(
+      id: 'food_1',
+      name: 'Chicken Alfredo',
+      imageUrl: 'assets/images/alfredo.png',
+      price: 26.49,
+      rating: 4.8,
+      reviewCount: 2500,
+      category: 'Entrees',
+      calories: 1570,
+      description: 'Creamy homemade alfredo sauce tossed with fettuccine pasta and topped with grilled chicken.',
+      ingredients: ['Fettuccine', 'Alfredo Sauce', 'Grilled Chicken', 'Parmesan'],
+      recipe: {'Fettuccine': 150, 'Alfredo Sauce': 200, 'Grilled Chicken': 1, 'Parmesan': 20},
+    ),
+    const DishModel(
+      id: 'food_2',
+      name: 'Classic Burger',
+      imageUrl: 'assets/images/classic_burger.png',
+      price: 14.99,
+      rating: 4.6,
+      reviewCount: 500,
+      category: 'Burgers',
+      calories: 1100,
+      description: 'Juicy beef patty topped with lettuce, tomato, and onion on a brioche bun.',
+      ingredients: ['Beef Patty', 'Lettuce', 'Tomato', 'Bun', 'Cheese'],
+      recipe: {'Beef Patty': 1, 'Lettuce': 1, 'Tomato': 1, 'Bun': 1, 'Cheddar Cheese': 1},
+    ),
+    const DishModel(
+      id: 'food_3',
+      name: 'Avocado Toast',
+      imageUrl: 'assets/images/avocado_toast.png',
+      price: 12.50,
+      rating: 4.7,
+      reviewCount: 300,
+      category: 'Breakfast',
+      calories: 450,
+      description: 'Sourdough toast topped with smashed avocado, poached egg, and chili flakes.',
+      ingredients: ['Bread', 'Avocado', 'Egg', 'Spices'],
+      recipe: {'Sourdough Bread': 2, 'Avocado': 1, 'Egg': 1},
+    ),
+    
+    // --- Chili's Inspired Additions ---
+    const DishModel(
+      id: 'chilis_1',
+      name: 'Texas Cheese Fries',
+      imageUrl: 'assets/images/cheese_fries.png',
+      price: 10.49,
+      rating: 4.8,
+      reviewCount: 2045,
+      category: 'Appetizers',
+      calories: 1240,
+      description: 'Shredded cheese, bacon, jalapeños, green onions. Served with house-made ranch.',
+      ingredients: ['Fries', 'Cheese Blend', 'Bacon', 'Jalapeños', 'Ranch'],
+      recipe: {'Fries': 300, 'Cheese': 100, 'Bacon': 30, 'Ranch': 50},
+    ),
+    const DishModel(
+      id: 'chilis_2',
+      name: 'Classic Chicken Fajitas',
+      imageUrl: 'assets/images/chicken_fajitas.png',
+      price: 19.99,
+      rating: 4.7,
+      reviewCount: 1530,
+      category: 'Fajitas',
+      calories: 890,
+      description: 'With bell peppers & onions, topped with cilantro. Served with Mexican rice, black beans, and flour tortillas.',
+      ingredients: ['Chicken Breast', 'Bell Peppers', 'Onions', 'Tortillas', 'Rice', 'Beans'],
+      recipe: {'Chicken': 200, 'Peppers': 100, 'Onions': 50, 'Tortillas': 3},
+    ),
+    const DishModel(
+      id: 'chilis_3',
+      name: 'Presidente Margarita®',
+      imageUrl: 'assets/images/presidente_margarita.png',
+      price: 8.50,
+      rating: 4.9,
+      reviewCount: 3200,
+      category: 'Drinks',
+      calories: 280,
+      description: 'Hand-shaken Margarita featuring Lunazul Reposado Tequila, Citrónge Extra Fine Orange Liqueur and E&J Brandy.',
+      ingredients: ['Tequila', 'Orange Liqueur', 'Brandy', 'Sour Mix', 'Lime'],
+      recipe: {'Tequila': 45, 'Orange Liqueur': 15, 'Brandy': 10, 'Sour Mix': 60},
+    ),
+    
+    // --- New Premium Additions ---
+    const DishModel(
+      id: 'new_1',
+      name: 'Truffle Parmesan Fries',
+      imageUrl: 'assets/images/cheese_fries.png',
+      price: 12.00,
+      rating: 4.9,
+      reviewCount: 412,
+      category: 'Appetizers',
+      calories: 650,
+      description: 'Crispy shoestring fries tossed in white truffle oil, topped with aged parmesan and fresh parsley. Served with garlic aioli.',
+      ingredients: ['Potatoes', 'Truffle Oil', 'Parmesan', 'Parsley', 'Garlic Aioli'],
+      recipe: {'Potatoes': 250, 'Truffle Oil': 10, 'Parmesan': 30, 'Garlic Aioli': 45},
+    ),
+    const DishModel(
+      id: 'new_2',
+      name: 'Wagyu Beef Burger',
+      imageUrl: 'assets/images/classic_burger.png',
+      price: 24.50,
+      rating: 4.9,
+      reviewCount: 890,
+      category: 'Burgers',
+      calories: 1200,
+      description: 'Premium half-pound Wagyu beef patty, caramelized onions, gruyère cheese, and house sauce on a toasted brioche bun.',
+      ingredients: ['Wagyu Beef', 'Gruyère Cheese', 'Caramelized Onions', 'Brioche Bun', 'House Sauce'],
+      recipe: {'Wagyu Patty': 1, 'Gruyère': 2, 'Onions': 50, 'Bun': 1, 'House Sauce': 30},
+    ),
+    const DishModel(
+      id: 'new_3',
+      name: 'Matcha Green Tea Latte',
+      imageUrl: 'assets/images/matcha_latte.png',
+      price: 5.75,
+      rating: 4.8,
+      reviewCount: 560,
+      category: 'Coffee',
+      calories: 210,
+      description: 'Smooth and creamy matcha sweetened just right and served with steamed milk.',
+      ingredients: ['Matcha Powder', 'Milk', 'Simple Syrup'],
+      recipe: {'Matcha Powder': 15, 'Milk': 250, 'Simple Syrup': 10},
+    ),
+    const DishModel(
+      id: 'new_4',
+      name: 'Classic Tiramisu',
+      imageUrl: 'assets/images/tiramisu_new.png',
+      price: 9.50,
+      rating: 4.9,
+      reviewCount: 340,
+      category: 'Desserts',
+      calories: 480,
+      description: 'Layers of espresso-soaked ladyfingers and lightly sweetened mascarpone cream, dusted with cocoa powder.',
+      ingredients: ['Ladyfingers', 'Espresso', 'Mascarpone', 'Cocoa Powder', 'Sugar'],
+      recipe: {'Ladyfingers': 50, 'Espresso': 30, 'Mascarpone': 80, 'Cocoa Powder': 5},
+    ),
+    const DishModel(
+      id: 'new_5',
+      name: 'Grilled Chicken Caesar',
+      imageUrl: 'assets/images/caesar_salad.png',
+      price: 16.00,
+      rating: 4.7,
+      reviewCount: 425,
+      category: 'Salads',
+      calories: 550,
+      description: 'Crisp romaine lettuce, garlic croutons, and shaved parmesan, tossed in creamy Caesar dressing and topped with grilled chicken breast.',
+      ingredients: ['Romaine Lettuce', 'Grilled Chicken', 'Parmesan', 'Croutons', 'Caesar Dressing'],
+      recipe: {'Romaine': 150, 'Chicken': 150, 'Parmesan': 20, 'Croutons': 30, 'Dressing': 50},
+    ),
+    const DishModel(
+      id: 'new_6',
+      name: 'Spicy Mango Margarita',
+      imageUrl: 'assets/images/mango_margarita.png',
+      price: 11.50,
+      rating: 4.8,
+      reviewCount: 275,
+      category: 'Drinks',
+      calories: 220,
+      description: 'Silver tequila, triple sec, mango purée, and fresh lime juice, shaken with muddled jalapeños and served with a Tajín rim.',
+      ingredients: ['Tequila', 'Triple Sec', 'Mango Purée', 'Lime Juice', 'Jalapeño'],
+      recipe: {'Tequila': 50, 'Triple Sec': 15, 'Mango Purée': 45, 'Lime Juice': 15, 'Jalapeño': 5},
+    ),
+  ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'imageUrl': imageUrl,
+      'price': price,
+      'rating': rating,
+      'reviewCount': reviewCount,
+      'category': category,
+      'calories': calories,
+      'description': description,
+      'ingredients': ingredients,
+      'recipe': recipe,
+      'orderCount': orderCount,
+    };
+  }
+
+  static String? _getAssetForId(String id) {
+    try {
+      final mock = mockDishes.firstWhere((d) => d.id == id);
+      if (mock.imageUrl.startsWith('assets/')) return mock.imageUrl;
+    } catch (_) {}
+    return null;
+  }
+
+  factory DishModel.fromMap(Map<String, dynamic> map, String documentId) {
+    return DishModel(
+      id: documentId,
+      name: map['name'] ?? '',
+      imageUrl: _getAssetForId(documentId) ?? ((map['imageUrl'] != null && map['imageUrl'].toString().trim().isNotEmpty)
+          ? map['imageUrl']
+          : _getFallbackImage(map['category'] ?? '')),
+      price: (map['price'] ?? 0.0).toDouble(),
+      rating: (map['rating'] ?? 0).toDouble(),
+      reviewCount: map['reviewCount'] ?? 0,
+      category: map['category'] ?? '',
+      calories: map['calories'] ?? 0,
+      description: map['description'] ?? '',
+      ingredients: List<String>.from(map['ingredients'] ?? []),
+      recipe: (map['recipe'] as Map<String, dynamic>?)?.map(
+            (k, v) => MapEntry(k, (v as num).toDouble()),
+          ) ??
+          {},
+      orderCount: map['orderCount'] ?? 0,
+    );
+  }
+
+  static String _getFallbackImage(String category) {
+    switch (category.toLowerCase()) {
+      case 'coffee':
+      case 'drinks':
+        return 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop';
+      case 'burgers':
+        return 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop';
+      case 'pastries':
+      case 'desserts':
+        return 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=800&auto=format&fit=crop';
+      case 'salads':
+        return 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop';
+      default:
+        return 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop';
+    }
+  }
+}

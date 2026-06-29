@@ -1,0 +1,446 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import '../../widgets/custom_bottom_nav.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../core/providers/inventory_provider.dart';
+import '../../../core/models/dish_model.dart';
+import '../../../core/models/inventory_model.dart';
+
+class RecipeCostingScreen extends ConsumerStatefulWidget {
+  const RecipeCostingScreen({super.key});
+
+  @override
+  ConsumerState<RecipeCostingScreen> createState() => _RecipeCostingScreenState();
+}
+
+class _RecipeCostingScreenState extends ConsumerState<RecipeCostingScreen> {
+  DishModel? _selectedDish;
+  final TextEditingController _plateCostController = TextEditingController();
+  final TextEditingController _salesPriceController = TextEditingController();
+  
+  double _margin = 0.0;
+  double _profit = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _plateCostController.addListener(_calculateManual);
+    _salesPriceController.addListener(_calculateManual);
+  }
+  
+  @override
+  void dispose() {
+    _plateCostController.dispose();
+    _salesPriceController.dispose();
+    super.dispose();
+  }
+
+  void _calculateManual() {
+     _calculate();
+  }
+
+  void _calculate() {
+    final cost = double.tryParse(_plateCostController.text) ?? 0.0;
+    final price = double.tryParse(_salesPriceController.text) ?? 0.0;
+
+    if (price > 0) {
+      setState(() {
+        _profit = price - cost;
+        _margin = (_profit / price) * 100;
+      });
+    } else {
+       setState(() {
+        _profit = -cost;
+        _margin = 0.0;
+      });
+    }
+  }
+  
+  void _onDishSelected(DishModel? dish, List<InventoryModel> inventory) {
+    if (dish == null) return;
+    
+    double totalCost = 0.0;
+    bool missingIngredients = false;
+    
+    dish.recipe.forEach((ingName, qty) {
+      try {
+        final item = inventory.firstWhere((i) => i.name == ingName);
+        totalCost += item.cost * qty;
+      } catch (e) {
+        missingIngredients = true;
+      }
+    });
+
+    setState(() {
+      _selectedDish = dish;
+      _plateCostController.text = totalCost.toStringAsFixed(2);
+      _salesPriceController.text = dish.price.toStringAsFixed(2);
+      _calculate();
+    });
+    
+    if (missingIngredients) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.missingIngredientsWarning)),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final inventoryState = ref.watch(inventoryProvider);
+    final inventoryItems = inventoryState.value ?? [];
+
+    final dishes = DishModel.mockDishes; 
+
+    final isMobile = MediaQuery.of(context).size.width < 800;
+
+    Color marginColor = theme.colorScheme.error;
+    if (_margin >= 70) marginColor = const Color(0xFF10B981);
+    else if (_margin >= 30) marginColor = const Color(0xFFF59E0B);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.recipeCostingTitle),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+        child: Column(
+          children: [
+             Card(
+               child: Padding(
+                 padding: const EdgeInsets.all(24.0),
+                 child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                      Text(
+                        l10n.selectTemplate,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: theme.textTheme.bodySmall?.color,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      DropdownButtonFormField<DishModel>(
+                        isExpanded: true,
+                        decoration: InputDecoration(
+                          labelText: l10n.selectMenuItem,
+                          prefixIcon: Icon(Icons.restaurant_menu_rounded, color: theme.colorScheme.primary),
+                          filled: true,
+                          fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                        ),
+                        items: dishes.map((d) => DropdownMenuItem(value: d, child: Text(d.name, style: const TextStyle(fontWeight: FontWeight.w600), overflow: TextOverflow.ellipsis))).toList(),
+                        onChanged: (val) => _onDishSelected(val, inventoryItems),
+                      ),
+                   ],
+                 ),
+               ),
+             ).animate().fade(duration: 500.ms).slideY(begin: 0.1),
+             const SizedBox(height: 32),
+             
+             if (isMobile)
+               Column(
+                 children: [
+                   Card(
+                     child: Padding(
+                       padding: const EdgeInsets.all(32.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: theme.colorScheme.primary.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(Icons.calculate_rounded, color: theme.colorScheme.primary),
+                              ),
+                              const SizedBox(width: 16),
+                              Text(l10n.plateInputs, 
+                                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 32),
+                          TextField(
+                            controller: _plateCostController,
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            decoration: InputDecoration(
+                              labelText: l10n.plateCostLabel,
+                              hintText: '0.00',
+                              helperText: l10n.plateCostHelper,
+                              suffixText: 'USD',
+                              prefixIcon: Icon(Icons.attach_money, color: theme.colorScheme.secondary),
+                              filled: true,
+                              fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          TextField(
+                            controller: _salesPriceController,
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            decoration: InputDecoration(
+                              labelText: l10n.targetPriceLabel,
+                              hintText: '0.00',
+                              helperText: l10n.targetPriceHelper,
+                              suffixText: 'USD',
+                              prefixIcon: Icon(Icons.point_of_sale_rounded, color: theme.colorScheme.primary),
+                              filled: true,
+                              fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ).animate(delay: 200.ms).fade(duration: 500.ms).slideX(begin: -0.1),
+                  const SizedBox(height: 24),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      gradient: LinearGradient(
+                        colors: [
+                          marginColor.withOpacity(0.1),
+                          marginColor.withOpacity(0.05),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      border: Border.all(color: marginColor.withOpacity(0.2), width: 2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: marginColor.withOpacity(0.1),
+                          blurRadius: 24,
+                          offset: const Offset(0, 8),
+                        )
+                      ]
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                         mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: marginColor.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Text(
+                              l10n.grossProfitMargin, 
+                              style: TextStyle(
+                                color: marginColor,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 1.5,
+                                fontSize: 12,
+                              )
+                            ),
+                          ),
+                          const SizedBox(height: 32),
+                          Text(
+                            '${_margin.toStringAsFixed(1)}%',
+                            style: TextStyle(
+                              fontSize: 72,
+                              fontWeight: FontWeight.w900,
+                              height: 1,
+                              color: marginColor,
+                              letterSpacing: -2,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.surface,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: theme.colorScheme.onSurface.withOpacity(0.05)),
+                            ),
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.monetization_on_rounded, color: marginColor),
+                                  const SizedBox(width: 12),
+                                  Text(
+                                    '${l10n.profitPerPlate}: ',
+                                    style: TextStyle(color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7), fontWeight: FontWeight.w600),
+                                  ),
+                                  Text(
+                                    '\$${_profit.toStringAsFixed(2)}',
+                                     style: TextStyle(color: theme.textTheme.bodyLarge?.color, fontWeight: FontWeight.w900, fontSize: 18),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ).animate(delay: 300.ms).fade(duration: 500.ms).slideX(begin: 0.1),
+                 ],
+               )
+             else
+               Row(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   Expanded(
+                     flex: 1,
+                     child: Card(
+                       child: Padding(
+                         padding: const EdgeInsets.all(32.0),
+                         child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           mainAxisSize: MainAxisSize.min,
+                           children: [
+                             Row(
+                               children: [
+                                 Container(
+                                   padding: const EdgeInsets.all(8),
+                                   decoration: BoxDecoration(
+                                     color: theme.colorScheme.primary.withOpacity(0.1),
+                                     borderRadius: BorderRadius.circular(8),
+                                   ),
+                                   child: Icon(Icons.calculate_rounded, color: theme.colorScheme.primary),
+                                 ),
+                                 const SizedBox(width: 16),
+                                 Text(l10n.plateInputs, 
+                                   style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)
+                                 ),
+                               ],
+                             ),
+                             const SizedBox(height: 32),
+                             TextField(
+                               controller: _plateCostController,
+                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                               decoration: InputDecoration(
+                                 labelText: l10n.plateCostLabel,
+                                 hintText: '0.00',
+                                 helperText: l10n.plateCostHelper,
+                                 suffixText: 'USD',
+                                 prefixIcon: Icon(Icons.attach_money, color: theme.colorScheme.secondary),
+                                 filled: true,
+                                 fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                               ),
+                             ),
+                             const SizedBox(height: 24),
+                             TextField(
+                               controller: _salesPriceController,
+                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                               decoration: InputDecoration(
+                                 labelText: l10n.targetPriceLabel,
+                                 hintText: '0.00',
+                                 helperText: l10n.targetPriceHelper,
+                                 suffixText: 'USD',
+                                 prefixIcon: Icon(Icons.point_of_sale_rounded, color: theme.colorScheme.primary),
+                                 filled: true,
+                                 fillColor: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                               ),
+                             ),
+                           ],
+                         ),
+                       ),
+                     ).animate(delay: 200.ms).fade(duration: 500.ms).slideX(begin: -0.1),
+                   ),
+                   const SizedBox(width: 24),
+                   Expanded(
+                     flex: 1,
+                     child: Container(
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(24),
+                         gradient: LinearGradient(
+                           colors: [
+                             marginColor.withOpacity(0.1),
+                             marginColor.withOpacity(0.05),
+                           ],
+                           begin: Alignment.topLeft,
+                           end: Alignment.bottomRight,
+                         ),
+                         border: Border.all(color: marginColor.withOpacity(0.2), width: 2),
+                         boxShadow: [
+                           BoxShadow(
+                             color: marginColor.withOpacity(0.1),
+                             blurRadius: 24,
+                             offset: const Offset(0, 8),
+                           )
+                         ]
+                       ),
+                       child: Padding(
+                         padding: const EdgeInsets.all(48.0),
+                         child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                           children: [
+                             Container(
+                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                               decoration: BoxDecoration(
+                                 color: marginColor.withOpacity(0.2),
+                                 borderRadius: BorderRadius.circular(30),
+                               ),
+                               child: Text(
+                                 l10n.grossProfitMargin, 
+                                 style: TextStyle(
+                                   color: marginColor,
+                                   fontWeight: FontWeight.w900,
+                                   letterSpacing: 1.5,
+                                   fontSize: 12,
+                                 )
+                               ),
+                             ),
+                             const SizedBox(height: 32),
+                             Text(
+                               '${_margin.toStringAsFixed(1)}%',
+                               style: TextStyle(
+                                 fontSize: 72,
+                                 fontWeight: FontWeight.w900,
+                                 height: 1,
+                                 color: marginColor,
+                                 letterSpacing: -2,
+                               ),
+                             ),
+                             const SizedBox(height: 24),
+                             Container(
+                               padding: const EdgeInsets.all(16),
+                               decoration: BoxDecoration(
+                                 color: theme.colorScheme.surface,
+                                 borderRadius: BorderRadius.circular(16),
+                                 border: Border.all(color: theme.colorScheme.onSurface.withOpacity(0.05)),
+                               ),
+                               child: Row(
+                                 mainAxisSize: MainAxisSize.min,
+                                 children: [
+                                   Icon(Icons.monetization_on_rounded, color: marginColor),
+                                   const SizedBox(width: 12),
+                                   Text(
+                                     '${l10n.profitPerPlate}: ',
+                                     style: TextStyle(color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7), fontWeight: FontWeight.w600),
+                                   ),
+                                   Text(
+                                     '\$${_profit.toStringAsFixed(2)}',
+                                      style: TextStyle(color: theme.textTheme.bodyLarge?.color, fontWeight: FontWeight.w900, fontSize: 18),
+                                   ),
+                                 ],
+                               ),
+                             ),
+                           ],
+                         ),
+                       ),
+                     ).animate(delay: 300.ms).fade(duration: 500.ms).slideX(begin: 0.1),
+                   ),
+                 ],
+               ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: const CustomBottomNavBar(),
+    );
+  }
+}

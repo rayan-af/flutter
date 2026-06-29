@@ -30,15 +30,24 @@
 
 ### 📱 Customer Menu (NFC)
 <p align="center">
-  <img src="assets/images/client1.jpg" alt="Customer Menu" width="300">
+  <img src="assets/images/client1.jpg" width="200">
+  <img src="assets/images/client2.jpg" width="200">
+  <img src="assets/images/client3.jpg" width="200">
+  <img src="assets/images/client4.jpg" width="200">
+  <img src="assets/images/client5.jpg" width="200">
+  <img src="assets/images/client6.jpg" width="200">
+  <img src="assets/images/client7.jpg" width="200">
 </p>
 <p align="center">
-  <i>Customers simply tap their phone on the table's NFC tag. A beautiful digital menu opens instantly without any app installation, allowing them to order directly.</i>
+  <i>Customers simply tap their phone on the table's NFC tag. A beautiful digital menu opens instantly without any app installation, allowing them to browse and order directly.</i>
 </p>
 
 ### 🛎️ Waiter Dashboard
 <p align="center">
-  <img src="assets/images/waiter1.jpg" alt="Waiter Dashboard" width="300">
+  <img src="assets/images/waiter1.jpg" width="200">
+  <img src="assets/images/waiter2.jpg" width="200">
+  <img src="assets/images/waiter3.jpg" width="200">
+  <img src="assets/images/waiter4.jpg" width="200">
 </p>
 <p align="center">
   <i>Waiters get a real-time overview of their assigned tables, incoming customer orders, and instant notifications when the chef marks a dish as ready.</i>
@@ -46,7 +55,7 @@
 
 ### 🧑‍🍳 Chef Interface (KDS)
 <p align="center">
-  <img src="assets/images/chef.png" alt="Chef Interface" width="300">
+  <img src="assets/images/chef.png" width="400">
 </p>
 <p align="center">
   <i>A completely paperless Kitchen Display System. Incoming orders appear instantly. Chefs can manage tickets and mark items as "Preparing" or "Ready" with a single tap.</i>
@@ -54,7 +63,9 @@
 
 ### 🏢 Reception / Front Desk
 <p align="center">
-  <img src="assets/images/recp1.png" alt="Reception / Front Desk" width="300">
+  <img src="assets/images/recp1.png" width="200">
+  <img src="assets/images/recp2.png" width="200">
+  <img src="assets/images/recp3.png" width="200">
 </p>
 <p align="center">
   <i>The command center at the restaurant entrance. The receptionist can view real-time table occupancy, manage reservations, and seamlessly assign walk-in customers to available tables.</i>
@@ -62,15 +73,28 @@
 
 ### 📊 Manager Dashboard
 <p align="center">
-  <img src="assets/images/manager4.png" alt="Manager Dashboard" width="300">
+  <img src="assets/images/manager1.jpg" width="200">
+  <img src="assets/images/manager2.jpg" width="200">
+  <img src="assets/images/manager3.jpg" width="200">
+  <img src="assets/images/manager4.png" width="200">
+  <img src="assets/images/manager5.png" width="200">
 </p>
 <p align="center">
   <i>The administrative heart of the app. Managers can access financial analytics, track gross profit margins, modify the menu and pricing in real-time, and manage staff roles.</i>
 </p>
 
+### 🤖 AI Predictive Features
+<p align="center">
+  <img src="assets/images/ai1.jpg" width="300">
+  <img src="assets/images/ai2.jpg" width="300">
+</p>
+<p align="center">
+  <i>Leveraging the data collected by the Manager dashboard, the AI predictive models forecast inventory depletion and provide personalized dish recommendations for customers.</i>
+</p>
+
 ### 📅 Employee Shifts (Work Time)
 <p align="center">
-  <img src="assets/images/worktime.png" alt="Employee Shifts" width="300">
+  <img src="assets/images/worktime.png" width="300">
 </p>
 <p align="center">
   <i>A dedicated scheduling screen where employees can check their upcoming work shifts, specific hours, and daily roles (e.g., Main floor, Hosts Stand).</i>
